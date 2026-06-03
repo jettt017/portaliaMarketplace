@@ -1,0 +1,28 @@
+# --- TEMPLATE COMMIT MESSAGE PORTALIA ---
+# format: <type>(<scope>): <subjek pendek deskriptif>
+# contoh: feat(marketplace): tambah fitur auto-reply chat penjual
+#
+# Pilih salah satu <type> berikut:
+#   feat     : Fitur baru
+#   fix      : Perbaikan bug / error
+#   docs     : Dokumentasi (README.md, DESIGN.md, dll)
+#   style    : Format kode, CSS, styling (tanpa ubah logika)
+#   refactor : Restrukturisasi kode (tanpa ubah fungsi/fitur)
+#   perf     : Optimasi performa kode
+#   test     : Pengujian / Unit Test
+#   chore    : Tugas rutin/config (misal update .gitignore, setup)
+#
+# <scope> (opsional): Bagian aplikasi yang diubah (misal: admin, marketplace, db, config, assets)
+#
+# Tulis subjek (baris pertama) maks 50 karakter, diawali huruf kecil, tanpa titik di akhir.
+# Gunakan kata kerja aktif (misal: "tambah login" bukan "menambahkan login").
+#
+# Batasi baris kosong di bawah subjek sebelum menulis deskripsi detail.
+# --------------------------------------------------------------------------------------
+
+# Deskripsi detail (opsional - jelaskan alasan & solusi jika perubahan cukup kompleks):
+# - 
+# - 
+
+# Referensi issue atau tugas (opsional):
+# Close #123

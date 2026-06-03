@@ -1,0 +1,23 @@
+# IDEs and Editors
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+
+# OS metadata
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# PHP / Web Server logs
+*.log
+error_log
+apache_errors.log
+
+# Uploads directory (keep directory but ignore files)
+/uploads/*
+!/uploads/.gitkeep
