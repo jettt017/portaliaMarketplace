@@ -36,11 +36,11 @@ function getDB() {
     static $pdo = null;
     if ($pdo === null) {
         try {
-            $host = getenv('SUPABASE_DB_HOST') ?: 'localhost';
-            $port = getenv('SUPABASE_DB_PORT') ?: '5432';
-            $dbname = getenv('SUPABASE_DB_NAME') ?: 'postgres';
-            $user = getenv('SUPABASE_DB_USER') ?: 'postgres';
-            $password = getenv('SUPABASE_DB_PASSWORD') ?: '';
+            $host = getenv('PGHOST') ?: (getenv('SUPABASE_DB_HOST') ?: 'localhost');
+            $port = getenv('PGPORT') ?: (getenv('SUPABASE_DB_PORT') ?: '5432');
+            $dbname = getenv('PGDATABASE') ?: (getenv('SUPABASE_DB_NAME') ?: 'postgres');
+            $user = getenv('PGUSER') ?: (getenv('SUPABASE_DB_USER') ?: 'postgres');
+            $password = getenv('PGPASSWORD') ?: (getenv('SUPABASE_DB_PASSWORD') ?: '');
 
             $dsn = "pgsql:host={$host};port={$port};dbname={$dbname}";
             
