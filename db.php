@@ -35,15 +35,26 @@ loadEnv(__DIR__ . '/.env');
 function getDB() {
     static $pdo = null;
     if ($pdo === null) {
+        $required = ['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD'];
+        $missing = [];
+        foreach ($required as $var) {
+            if (getenv($var) === false || getenv($var) === '') {
+                $missing[] = $var;
+            }
+        }
+        if (!empty($missing)) {
+            die("Database configuration error: missing required environment variable(s): " . implode(', ', $missing));
+        }
+
         try {
-            $host = getenv('PGHOST') ?: (getenv('SUPABASE_DB_HOST') ?: 'localhost');
-            $port = getenv('PGPORT') ?: (getenv('SUPABASE_DB_PORT') ?: '5432');
-            $dbname = getenv('PGDATABASE') ?: (getenv('SUPABASE_DB_NAME') ?: 'postgres');
-            $user = getenv('PGUSER') ?: (getenv('SUPABASE_DB_USER') ?: 'postgres');
-            $password = getenv('PGPASSWORD') ?: (getenv('SUPABASE_DB_PASSWORD') ?: '');
+            $host     = getenv('DB_HOST');
+            $port     = getenv('DB_PORT');
+            $dbname   = getenv('DB_NAME');
+            $user     = getenv('DB_USER');
+            $password = getenv('DB_PASSWORD');
 
             $dsn = "pgsql:host={$host};port={$port};dbname={$dbname}";
-            
+
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
