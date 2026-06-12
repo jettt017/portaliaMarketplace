@@ -143,6 +143,11 @@ $recent_users = $db->query("SELECT * FROM users WHERE role = 'student' ORDER BY 
           <span class="navbar-text ms-3 fw-semibold text-primary">Admin Workspace</span>
 
           <div class="navbar-actions ms-auto">
+            <a href="../marketplace/index.php" class="btn btn-primary btn-sm">
+              <i class="bi bi-shop-window" aria-hidden="true"></i>
+              <span class="d-none d-sm-inline">Menu Utama</span>
+            </a>
+
             <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
               <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
             </button>
@@ -170,6 +175,12 @@ $recent_users = $db->query("SELECT * FROM users WHERE role = 'student' ORDER BY 
                 <h1 class="h3 mb-1">Dashboard</h1>
                 <p class="text-muted mb-0">Control student accounts, list requests, categories, and track platform revenue.</p>
               </div>
+            </div>
+            <div class="heading-actions">
+              <a href="../marketplace/index.php" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left-circle" aria-hidden="true"></i>
+                Kembali ke Marketplace
+              </a>
             </div>
           </div>
 

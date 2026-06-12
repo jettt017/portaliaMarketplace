@@ -58,6 +58,11 @@ if (!$_nav_is_guest) {
           <i class="bi bi-box-arrow-in-right me-2"></i>Log In
         </a>
       <?php else: ?>
+        <?php if (isAdmin()): ?>
+          <a href="../admin/index.php" class="btn btn-portalia-primary" style="height: 40px; padding: 0 16px !important; font-size: 13px;">
+            <i class="bi bi-speedometer2 me-2"></i>Dashboard
+          </a>
+        <?php endif; ?>
         <a href="profile.php" class="desktop-user-profile">
           <img src="<?php echo htmlspecialchars($_nav_avatar); ?>" alt="Profile" class="desktop-user-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
           <span class="desktop-user-name"><?php echo htmlspecialchars($_nav_username); ?></span>
