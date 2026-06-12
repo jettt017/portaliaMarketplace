@@ -1,8 +1,8 @@
 <?php
 require_once '../db.php';
 
-// If already logged in, redirect to index
-if (isAuthenticated()) {
+// If already logged in AND not a guest, redirect to index
+if (isAuthenticated() && $_SESSION['user_id'] !== 'guest') {
     header("Location: index.php");
     exit;
 }
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$username, $email, $hashedPassword, $nim, $phone, $avatar]);
                 
                 // Get newly inserted user's ID
-                $newUserId = $db->lastInsertId();
+                $newUserId = $db->lastInsertId('users_id_seq');
 
                 // Log the user in immediately
                 $_SESSION['user_id'] = $newUserId;

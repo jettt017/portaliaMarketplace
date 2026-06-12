@@ -21,3 +21,9 @@ apache_errors.log
 # Uploads directory (keep directory but ignore files)
 /uploads/*
 !/uploads/.gitkeep
+
+# Ignore sessions
+/sessions/
+
+# Ignore env
+/.env

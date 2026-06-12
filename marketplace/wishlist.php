@@ -127,7 +127,7 @@ $products = $stmt->fetchAll();
     </div>
 
     <!-- MAIN PRODUCT LIST -->
-    <main class="px-3 pb-5 mt-2">
+    <main class="page-section">
       <?php if (count($products) == 0): ?>
         <div class="empty-wishlist">
           <div class="empty-wishlist-icon">
@@ -140,42 +140,41 @@ $products = $stmt->fetchAll();
           <a href="index.php" class="btn btn-portalia-primary">Explore Products</a>
         </div>
       <?php else: ?>
-        <div class="row g-3">
+        <div class="product-grid">
           <?php foreach ($products as $prod): ?>
-            <div class="col-6 col-sm-4 col-md-3" id="product-card-<?php echo $prod['id']; ?>">
-              <div class="product-card-portalia">
-                <span class="product-card-badge condition-<?php echo str_replace('_', '-', $prod['item_condition']); ?>">
-                  <?php echo str_replace('_', ' ', $prod['item_condition']); ?>
-                </span>
+            <div class="product-card-portalia" id="product-card-<?php echo $prod['id']; ?>">
+              <span class="product-card-badge condition-<?php echo str_replace('_', '-', $prod['item_condition']); ?>">
+                <?php echo str_replace('_', ' ', $prod['item_condition']); ?>
+              </span>
 
-                <!-- Active Wishlist state since it's in this list -->
-                <button type="button" class="product-card-wishlist active" data-product-id="<?php echo $prod['id']; ?>" aria-label="Remove from wishlist">
-                  <i class="bi bi-heart-fill"></i>
-                </button>
+              <!-- Active Wishlist state since it's in this list -->
+              <button type="button" class="product-card-wishlist active" data-product-id="<?php echo $prod['id']; ?>" aria-label="Remove from wishlist">
+                <i class="bi bi-heart-fill"></i>
+              </button>
 
-                <a href="product.php?id=<?php echo $prod['id']; ?>" class="text-decoration-none text-reset flex-grow-1 d-flex flex-column">
-                  <div class="product-card-img-wrapper">
-                    <?php if (!empty($prod['image']) && file_exists(__DIR__ . '/../' . $prod['image'])): ?>
-                      <img src="../<?php echo sanitize($prod['image']); ?>" alt="<?php echo sanitize($prod['name']); ?>" class="product-card-img">
-                    <?php else: ?>
-                      <div class="placeholder-product-img">
-                        <i class="bi bi-image"></i>
-                      </div>
-                    <?php endif; ?>
-                  </div>
-
-                  <div class="product-card-body">
-                    <span class="product-card-category"><?php echo sanitize($prod['category_name']); ?></span>
-                    <h3 class="product-card-title"><?php echo sanitize($prod['name']); ?></h3>
-                    <span class="product-card-price"><?php echo formatRupiah($prod['price']); ?></span>
-
-                    <div class="product-card-footer">
-                      <img src="../<?php echo sanitize($prod['seller_avatar']); ?>" alt="Seller" class="product-card-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
-                      <span class="product-card-seller"><?php echo sanitize($prod['seller_name']); ?></span>
+              <a href="product.php?id=<?php echo $prod['id']; ?>" class="text-decoration-none text-reset flex-grow-1 d-flex flex-column">
+                <div class="product-card-img-wrapper">
+                  <?php if (!empty($prod['image']) && file_exists(__DIR__ . '/../' . $prod['image'])): ?>
+                    <img src="../<?php echo sanitize($prod['image']); ?>" alt="<?php echo sanitize($prod['name']); ?>" class="product-card-img">
+                  <?php else: ?>
+                    <div class="placeholder-product-img">
+                      <i class="bi bi-image"></i>
+                      <span class="placeholder-product-label"><?php echo sanitize($prod['category_name']); ?></span>
                     </div>
+                  <?php endif; ?>
+                </div>
+
+                <div class="product-card-body">
+                  <span class="product-card-category"><?php echo sanitize($prod['category_name']); ?></span>
+                  <h3 class="product-card-title"><?php echo sanitize($prod['name']); ?></h3>
+                  <span class="product-card-price"><?php echo formatRupiah($prod['price']); ?></span>
+
+                  <div class="product-card-footer">
+                    <img src="../<?php echo sanitize($prod['seller_avatar']); ?>" alt="Seller" class="product-card-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+                    <span class="product-card-seller"><?php echo sanitize($prod['seller_name']); ?></span>
                   </div>
-                </a>
-              </div>
+                </div>
+              </a>
             </div>
           <?php endforeach; ?>
         </div>

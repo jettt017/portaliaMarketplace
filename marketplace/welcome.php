@@ -1,7 +1,7 @@
 <?php
 require_once '../db.php';
-// If already logged in, redirect to homepage
-if (isAuthenticated()) {
+// If already logged in AND not a guest, redirect to homepage
+if (isAuthenticated() && $_SESSION['user_id'] !== 'guest') {
     header("Location: index.php");
     exit;
 }

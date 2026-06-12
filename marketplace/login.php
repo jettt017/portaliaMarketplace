@@ -1,8 +1,8 @@
 <?php
 require_once '../db.php';
 
-// If already logged in, redirect to appropriate index
-if (isAuthenticated()) {
+// If already logged in AND not a guest, redirect to appropriate index
+if (isAuthenticated() && $_SESSION['user_id'] !== 'guest') {
     if (isAdmin()) {
         header("Location: ../admin/index.php");
     } else {

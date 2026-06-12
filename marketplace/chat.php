@@ -104,7 +104,7 @@ if ($receiver_id > 0) {
                 SELECT LEAST(sender_id, receiver_id) as val1, GREATEST(sender_id, receiver_id) as val2, MAX(created_at) as max_time
                 FROM chat_messages
                 WHERE sender_id = ? OR receiver_id = ?
-                GROUP BY val1, val2
+                GROUP BY 1, 2
             ) t ON 1=1
             JOIN chat_messages m ON m.created_at = t.max_time AND (
                 (m.sender_id = u.id AND m.receiver_id = ?) OR

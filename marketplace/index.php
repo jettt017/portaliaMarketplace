@@ -279,10 +279,10 @@ if (!$is_guest) {
     </div>
 
     <!-- PRODUCTS SECTION -->
-    <main class="px-3 pb-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 style="font-size: 16px; font-weight: 700; margin: 0;">Recommendations</h2>
-        <span class="text-muted" style="font-size: 12px;"><?php echo count($products); ?> items found</span>
+    <main class="page-section">
+      <div class="section-heading-row">
+        <h2>Recommendations</h2>
+        <span class="section-meta"><?php echo count($products); ?> items found</span>
       </div>
 
       <?php if (count($products) == 0): ?>
@@ -292,45 +292,44 @@ if (!$is_guest) {
           <p class="text-muted" style="font-size: 13px;">Try typing a different keyword or removing the filters.</p>
         </div>
       <?php else: ?>
-        <div class="row g-3">
+        <div class="product-grid">
           <?php foreach ($products as $prod): ?>
-            <div class="col-6 col-sm-4 col-md-3">
-              <div class="product-card-portalia">
-                <!-- Condition Badge -->
-                <span class="product-card-badge condition-<?php echo str_replace('_', '-', $prod['item_condition']); ?>">
-                  <?php echo str_replace('_', ' ', $prod['item_condition']); ?>
-                </span>
+            <div class="product-card-portalia">
+              <!-- Condition Badge -->
+              <span class="product-card-badge condition-<?php echo str_replace('_', '-', $prod['item_condition']); ?>">
+                <?php echo str_replace('_', ' ', $prod['item_condition']); ?>
+              </span>
 
-                <!-- Wishlist Toggle Button -->
-                <button type="button" class="product-card-wishlist <?php echo in_array($prod['id'], $wishlist_ids) ? 'active' : ''; ?>" 
-                        data-product-id="<?php echo $prod['id']; ?>" aria-label="Toggle wishlist">
-                  <i class="bi <?php echo in_array($prod['id'], $wishlist_ids) ? 'bi-heart-fill' : 'bi-heart'; ?>"></i>
-                </button>
+              <!-- Wishlist Toggle Button -->
+              <button type="button" class="product-card-wishlist <?php echo in_array($prod['id'], $wishlist_ids) ? 'active' : ''; ?>"
+                      data-product-id="<?php echo $prod['id']; ?>" aria-label="Toggle wishlist">
+                <i class="bi <?php echo in_array($prod['id'], $wishlist_ids) ? 'bi-heart-fill' : 'bi-heart'; ?>"></i>
+              </button>
 
-                <!-- Product Link -->
-                <a href="product.php?id=<?php echo $prod['id']; ?>" class="text-decoration-none text-reset flex-grow-1 d-flex flex-column">
-                  <div class="product-card-img-wrapper">
-                    <?php if (!empty($prod['image']) && file_exists(__DIR__ . '/../' . $prod['image'])): ?>
-                      <img src="../<?php echo sanitize($prod['image']); ?>" alt="<?php echo sanitize($prod['name']); ?>" class="product-card-img">
-                    <?php else: ?>
-                      <div class="placeholder-product-img">
-                        <i class="bi bi-image"></i>
-                      </div>
-                    <?php endif; ?>
-                  </div>
-
-                  <div class="product-card-body">
-                    <span class="product-card-category"><?php echo sanitize($prod['category_name']); ?></span>
-                    <h3 class="product-card-title"><?php echo sanitize($prod['name']); ?></h3>
-                    <span class="product-card-price"><?php echo formatRupiah($prod['price']); ?></span>
-
-                    <div class="product-card-footer">
-                      <img src="../<?php echo sanitize($prod['seller_avatar']); ?>" alt="Seller" class="product-card-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
-                      <span class="product-card-seller"><?php echo sanitize($prod['seller_name']); ?></span>
+              <!-- Product Link -->
+              <a href="product.php?id=<?php echo $prod['id']; ?>" class="text-decoration-none text-reset flex-grow-1 d-flex flex-column">
+                <div class="product-card-img-wrapper">
+                  <?php if (!empty($prod['image']) && file_exists(__DIR__ . '/../' . $prod['image'])): ?>
+                    <img src="../<?php echo sanitize($prod['image']); ?>" alt="<?php echo sanitize($prod['name']); ?>" class="product-card-img">
+                  <?php else: ?>
+                    <div class="placeholder-product-img">
+                      <i class="bi bi-image"></i>
+                      <span class="placeholder-product-label"><?php echo sanitize($prod['category_name']); ?></span>
                     </div>
+                  <?php endif; ?>
+                </div>
+
+                <div class="product-card-body">
+                  <span class="product-card-category"><?php echo sanitize($prod['category_name']); ?></span>
+                  <h3 class="product-card-title"><?php echo sanitize($prod['name']); ?></h3>
+                  <span class="product-card-price"><?php echo formatRupiah($prod['price']); ?></span>
+
+                  <div class="product-card-footer">
+                    <img src="../<?php echo sanitize($prod['seller_avatar']); ?>" alt="Seller" class="product-card-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+                    <span class="product-card-seller"><?php echo sanitize($prod['seller_name']); ?></span>
                   </div>
-                </a>
-              </div>
+                </div>
+              </a>
             </div>
           <?php endforeach; ?>
         </div>

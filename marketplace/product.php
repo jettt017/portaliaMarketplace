@@ -227,98 +227,102 @@ $bought = isset($_GET['bought']) && $_GET['bought'] == 1;
       </div>
     <?php endif; ?>
 
-    <!-- PRODUCT GALLERY -->
-    <div class="product-gallery-wrapper">
-      <?php if (!empty($product['image']) && file_exists(__DIR__ . '/../' . $product['image'])): ?>
-        <img src="../<?php echo sanitize($product['image']); ?>" alt="<?php echo sanitize($product['name']); ?>" class="product-gallery-img">
-      <?php else: ?>
-        <div class="placeholder-product-img-detail">
-          <i class="bi bi-image"></i>
-        </div>
-      <?php endif; ?>
-    </div>
-
     <!-- PRODUCT CONTENT -->
-    <main class="p-3 pb-5">
-      <div class="d-flex justify-content-between align-items-start mb-2">
-        <div>
-          <span class="badge condition-<?php echo str_replace('_', '-', $product['item_condition']); ?> mb-2" style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: var(--portalia-radius-pill); background-color: var(--portalia-bg); color: var(--portalia-text-secondary);">
-            Condition: <?php echo str_replace('_', ' ', $product['item_condition']); ?>
-          </span>
-          <h1 style="font-size: 22px; line-height: 1.3; margin-bottom: 8px;"><?php echo sanitize($product['name']); ?></h1>
-          <p class="text-muted" style="font-size: 12px; margin-bottom: 0;">Category: <span class="fw-semibold text-dark"><?php echo sanitize($product['category_name']); ?></span></p>
+    <main class="product-detail-layout">
+      <section class="product-detail-media">
+        <div class="product-gallery-wrapper">
+          <?php if (!empty($product['image']) && file_exists(__DIR__ . '/../' . $product['image'])): ?>
+            <img src="../<?php echo sanitize($product['image']); ?>" alt="<?php echo sanitize($product['name']); ?>" class="product-gallery-img">
+          <?php else: ?>
+            <div class="placeholder-product-img-detail">
+              <i class="bi bi-image"></i>
+              <span class="placeholder-product-label"><?php echo sanitize($product['category_name']); ?></span>
+            </div>
+          <?php endif; ?>
         </div>
-      </div>
+      </section>
 
-      <div class="my-3 py-2">
-        <span class="d-block text-muted" style="font-size: 12px;">Price</span>
-        <span style="font-size: 26px; font-weight: 800; color: var(--portalia-primary);"><?php echo formatRupiah($product['price']); ?></span>
-      </div>
-
-      <hr style="border-top: 1px solid #E2E8F0;">
-
-      <!-- Description -->
-      <div class="mb-4">
-        <h2 style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">Description</h2>
-        <p style="font-size: 13px; line-height: 1.7; color: var(--portalia-text-secondary); white-space: pre-wrap;"><?php echo sanitize($product['description']); ?></p>
-      </div>
-
-      <!-- Item Specifications -->
-      <div class="card-portalia mb-4">
-        <h2 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;"><i class="bi bi-info-circle me-2" style="color: var(--portalia-primary);"></i>Specifications</h2>
-        <div class="row g-2" style="font-size: 12px;">
-          <div class="col-6">
-            <span class="text-muted">Stock Quantity:</span>
-            <span class="fw-semibold text-dark d-block"><?php echo $product['stock']; ?> items</span>
-          </div>
-          <div class="col-6">
-            <span class="text-muted">Expiration Date:</span>
-            <span class="fw-semibold text-dark d-block"><?php echo !empty($product['expiration_date']) ? date('d M Y', strtotime($product['expiration_date'])) : '-'; ?></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- SELLER INFO CARD -->
-      <div class="seller-profile-card">
-        <div class="seller-info">
-          <img src="../<?php echo sanitize($product['seller_avatar']); ?>" alt="Seller" class="seller-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+      <section class="product-detail-content">
+        <div class="d-flex justify-content-between align-items-start mb-2">
           <div>
-            <span class="fw-bold d-block" style="font-size: 13px;"><?php echo sanitize($product['seller_name']); ?></span>
-            <span class="text-muted" style="font-size: 11px;"><?php echo !empty($product['seller_nim']) ? 'NIM: ' . sanitize($product['seller_nim']) : 'Portalia Student'; ?></span>
+            <span class="badge condition-<?php echo str_replace('_', '-', $product['item_condition']); ?> mb-2" style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: var(--portalia-radius-pill); background-color: var(--portalia-bg); color: var(--portalia-text-secondary);">
+              Condition: <?php echo str_replace('_', ' ', $product['item_condition']); ?>
+            </span>
+            <h1 class="product-detail-title" style="font-size: 22px; line-height: 1.3; margin-bottom: 8px;"><?php echo sanitize($product['name']); ?></h1>
+            <p class="text-muted" style="font-size: 12px; margin-bottom: 0;">Category: <span class="fw-semibold text-dark"><?php echo sanitize($product['category_name']); ?></span></p>
           </div>
         </div>
-        <div class="text-end" style="font-size: 12px;">
-          <span class="badge bg-success" style="border-radius: var(--portalia-radius-pill); font-size: 10px; padding: 4px 8px;">Verified Student</span>
+
+        <div class="my-3 py-2">
+          <span class="d-block text-muted" style="font-size: 12px;">Price</span>
+          <span class="product-detail-price" style="font-size: 26px; font-weight: 800; color: var(--portalia-primary);"><?php echo formatRupiah($product['price']); ?></span>
         </div>
-      </div>
 
-      <!-- Space for bottom CTA -->
-      <div style="height: 100px;"></div>
+        <hr style="border-top: 1px solid #E2E8F0;">
+
+        <!-- Description -->
+        <div class="detail-info-card mb-4">
+          <h2 style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">Description</h2>
+          <p style="font-size: 13px; line-height: 1.7; color: var(--portalia-text-secondary); white-space: pre-wrap;"><?php echo sanitize($product['description']); ?></p>
+        </div>
+
+        <!-- Item Specifications -->
+        <div class="card-portalia mb-4">
+          <h2 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;"><i class="bi bi-info-circle me-2" style="color: var(--portalia-primary);"></i>Specifications</h2>
+          <div class="row g-2" style="font-size: 12px;">
+            <div class="col-6">
+              <span class="text-muted">Stock Quantity:</span>
+              <span class="fw-semibold text-dark d-block"><?php echo $product['stock']; ?> items</span>
+            </div>
+            <div class="col-6">
+              <span class="text-muted">Expiration Date:</span>
+              <span class="fw-semibold text-dark d-block"><?php echo !empty($product['expiration_date']) ? date('d M Y', strtotime($product['expiration_date'])) : '-'; ?></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SELLER INFO CARD -->
+        <div class="seller-profile-card">
+          <div class="seller-info">
+            <img src="../<?php echo sanitize($product['seller_avatar']); ?>" alt="Seller" class="seller-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+            <div>
+              <span class="fw-bold d-block" style="font-size: 13px;"><?php echo sanitize($product['seller_name']); ?></span>
+              <span class="text-muted" style="font-size: 11px;"><?php echo !empty($product['seller_nim']) ? 'NIM: ' . sanitize($product['seller_nim']) : 'Portalia Student'; ?></span>
+            </div>
+          </div>
+          <div class="text-end" style="font-size: 12px;">
+            <span class="badge bg-success" style="border-radius: var(--portalia-radius-pill); font-size: 10px; padding: 4px 8px;">Verified Student</span>
+          </div>
+        </div>
+
+        <!-- STICKY CTA BAR -->
+        <div class="sticky-cta-bar">
+          <button type="button" class="action-icon-btn product-detail-wishlist-btn <?php echo $in_wishlist ? 'active' : ''; ?>"
+                  data-product-id="<?php echo $productId; ?>" aria-label="Toggle wishlist">
+            <i class="bi <?php echo $in_wishlist ? 'bi-heart-fill text-danger' : 'bi-heart'; ?>" style="font-size: 20px;"></i>
+          </button>
+
+          <div class="d-flex gap-2 w-100 ms-3">
+            <?php if ($is_guest): ?>
+              <a href="login.php" class="btn btn-portalia-secondary flex-grow-1">Log in to Chat</a>
+              <a href="login.php" class="btn btn-portalia-primary flex-grow-1">Log in to Buy</a>
+            <?php elseif ($product['seller_id'] == $current_user_id): ?>
+              <a href="profile.php" class="btn btn-portalia-secondary w-100">Manage Your Listing</a>
+            <?php else: ?>
+              <a href="chat.php?product_id=<?php echo $productId; ?>&receiver_id=<?php echo $product['seller_id']; ?>" class="btn btn-portalia-secondary flex-grow-1" style="height: 52px; font-size: 14px;">
+                <i class="bi bi-chat-text-fill me-2"></i> Chat
+              </a>
+              <a href="product.php?id=<?php echo $productId; ?>&action=buy" class="btn btn-portalia-primary flex-grow-1" style="height: 52px; font-size: 14px;" onclick="return confirm('Are you sure you want to buy this item?');">
+                Buy Now
+              </a>
+            <?php endif; ?>
+          </div>
+        </div>
+
+        <!-- Space for mobile bottom CTA -->
+        <div class="mobile-cta-spacer"></div>
+      </section>
     </main>
-
-    <!-- STICKY CTA BAR -->
-    <div class="sticky-cta-bar">
-      <button type="button" class="action-icon-btn product-detail-wishlist-btn <?php echo $in_wishlist ? 'active' : ''; ?>" 
-              data-product-id="<?php echo $productId; ?>" aria-label="Toggle wishlist">
-        <i class="bi <?php echo $in_wishlist ? 'bi-heart-fill text-danger' : 'bi-heart'; ?>" style="font-size: 20px;"></i>
-      </button>
-      
-      <div class="d-flex gap-2 w-100 ms-3">
-        <?php if ($is_guest): ?>
-          <a href="login.php" class="btn btn-portalia-secondary flex-grow-1">Log in to Chat</a>
-          <a href="login.php" class="btn btn-portalia-primary flex-grow-1">Log in to Buy</a>
-        <?php elseif ($product['seller_id'] == $current_user_id): ?>
-          <a href="profile.php" class="btn btn-portalia-secondary w-100">Manage Your Listing</a>
-        <?php else: ?>
-          <a href="chat.php?product_id=<?php echo $productId; ?>&receiver_id=<?php echo $product['seller_id']; ?>" class="btn btn-portalia-secondary flex-grow-1" style="height: 52px; font-size: 14px;">
-            <i class="bi bi-chat-text-fill me-2"></i> Chat
-          </a>
-          <a href="product.php?id=<?php echo $productId; ?>&action=buy" class="btn btn-portalia-primary flex-grow-1" style="height: 52px; font-size: 14px;" onclick="return confirm('Are you sure you want to buy this item?');">
-            Buy Now
-          </a>
-        <?php endif; ?>
-      </div>
-    </div>
 
   </div>
 
