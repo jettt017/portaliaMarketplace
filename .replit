@@ -37,3 +37,12 @@ externalPort = 80
 [deployment]
 deploymentTarget = "autoscale"
 run = ["php", "-S", "0.0.0.0:5000"]
+
+[userenv]
+
+[userenv.shared]
+SUPABASE_DB_HOST = "aws-1-ap-northeast-1.pooler.supabase.com"
+SUPABASE_DB_PORT = "6543"
+SUPABASE_DB_NAME = "postgres"
+SUPABASE_DB_USER = "postgres.fqlgttalasetatxsalgj"
+SUPABASE_DB_PASSWORD = "nePDC9I7C2wGfU5i"
