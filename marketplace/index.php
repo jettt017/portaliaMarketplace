@@ -210,39 +210,8 @@ if (!$is_guest) {
 
   <div class="app-container">
     
-    <!-- HEADER -->
-    <header class="home-header">
-      <div class="user-greeting">
-        <?php if ($is_guest): ?>
-          <a href="login.php" class="action-icon-btn"><i class="bi bi-person"></i></a>
-          <div class="greeting-text">
-            <h2>Welcome Guest</h2>
-            <p>Log in to access all features</p>
-          </div>
-        <?php else: ?>
-          <a href="profile.php">
-            <img src="../<?php echo sanitize($user_profile['avatar']); ?>" alt="Profile" class="user-greeting-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
-          </a>
-          <div class="greeting-text">
-            <h2>Hi, <?php echo sanitize($user_profile['username']); ?></h2>
-            <p><?php echo !empty($user_profile['nim']) ? 'NIM: ' . sanitize($user_profile['nim']) : 'Portalia Student'; ?></p>
-          </div>
-        <?php endif; ?>
-      </div>
-
-      <div class="header-actions">
-        <?php if ($is_guest): ?>
-          <a href="login.php" class="btn btn-portalia-primary btn-sm py-2 px-3" style="height: auto; border-radius: var(--portalia-radius-sm) !important;">Log In</a>
-        <?php else: ?>
-          <a href="chat.php" class="action-icon-btn" aria-label="Messages">
-            <i class="bi bi-chat-text-fill"></i>
-            <?php if ($unread_chats > 0): ?>
-              <span class="action-icon-badge"><?php echo $unread_chats; ?></span>
-            <?php endif; ?>
-          </a>
-        <?php endif; ?>
-      </div>
-    </header>
+    <!-- DESKTOP NAVBAR (visible on ≥992px) -->
+    <?php include '_desktop_navbar.php'; ?>
 
     <!-- STICKY SEARCH BAR -->
     <div class="search-bar-wrapper">

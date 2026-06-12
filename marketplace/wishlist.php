@@ -111,34 +111,46 @@ $products = $stmt->fetchAll();
 
   <div class="app-container">
 
-    <!-- HEADER NAVIGATION -->
-    <nav class="wishlist-nav">
-      <div style="width: 40px;"></div> <!-- Spacer -->
-      <span class="fw-bold" style="font-size: 16px;">Wishlist</span>
-      <div style="width: 40px;"></div> <!-- Spacer -->
-    </nav>
+    <!-- DESKTOP NAVBAR (visible on ≥992px) -->
+    <?php include '_desktop_navbar.php'; ?>
 
-    <!-- SEARCH BAR -->
-    <div class="search-bar-wrapper">
-      <form action="wishlist.php" method="GET" class="search-box">
-        <i class="bi bi-search"></i>
-        <input type="text" name="search" class="input-portalia input-glow" placeholder="Search saved items..." value="<?php echo sanitize($search); ?>">
-      </form>
-    </div>
+    <main class="feature-page">
+      <section class="page-header-card">
+        <div class="page-header-main">
+          <span class="page-header-icon"><i class="bi bi-heart-fill"></i></span>
+          <div>
+            <span class="page-header-eyebrow">Saved picks</span>
+            <h1 class="page-header-title">Wishlist</h1>
+            <p class="page-header-subtitle">Saved products you want to check later.</p>
+          </div>
+        </div>
+        <div class="page-header-actions">
+          <a href="index.php" class="btn btn-portalia-secondary" style="height: 44px; padding: 0 18px !important; font-size: 13px;">
+            <i class="bi bi-shop me-2"></i>Browse
+          </a>
+        </div>
+      </section>
 
-    <!-- MAIN PRODUCT LIST -->
-    <main class="page-section">
+      <section class="wishlist-toolbar">
+        <div class="search-bar-wrapper">
+          <form action="wishlist.php" method="GET" class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" name="search" class="input-portalia input-glow" placeholder="Search saved items..." value="<?php echo sanitize($search); ?>">
+          </form>
+        </div>
+      </section>
+
       <?php if (count($products) == 0): ?>
-        <div class="empty-wishlist">
-          <div class="empty-wishlist-icon">
+        <section class="empty-state">
+          <div class="empty-state-icon">
             <i class="bi bi-heartbreak"></i>
           </div>
-          <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">No Saved Items</h2>
-          <p class="text-muted" style="font-size: 13px; max-width: 280px; margin: 0 auto 24px;">
-            <?php echo !empty($search) ? "No saved products match your search keyword." : "You haven't added any products to your wishlist yet."; ?>
+          <h2>Your wishlist is empty</h2>
+          <p>
+            <?php echo !empty($search) ? "No saved products match your search keyword." : "Save products you like and find them here later."; ?>
           </p>
-          <a href="index.php" class="btn btn-portalia-primary">Explore Products</a>
-        </div>
+          <a href="index.php" class="btn btn-portalia-primary">Browse Marketplace</a>
+        </section>
       <?php else: ?>
         <div class="product-grid">
           <?php foreach ($products as $prod): ?>

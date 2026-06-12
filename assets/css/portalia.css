@@ -21,9 +21,10 @@
   --portalia-radius-lg: 22px;
   --portalia-radius-pill: 999px;
   --portalia-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --portalia-page-max: 1440px;
+  --portalia-page-max: 1600px;
   --portalia-page-pad: 16px;
-  --portalia-grid-gap: 16px;
+  --portalia-grid-gap: 14px;
+  --portalia-card-media-height: 150px;
 }
 
 body {
@@ -34,7 +35,7 @@ body {
   color: var(--portalia-text-primary) !important;
   min-height: 100vh;
   margin: 0;
-  padding-bottom: 90px; /* Space for floating bottom nav */
+  padding-bottom: 92px;
   overflow-x: hidden;
 }
 
@@ -57,8 +58,187 @@ h1, h2, h3, h4, h5, h6 {
   padding-inline: var(--portalia-page-pad);
 }
 
+.desktop-navbar {
+  display: none;
+}
+
 .page-section {
-  padding: 18px 0 32px;
+  padding: 18px 0 34px;
+}
+
+.page-shell,
+.marketplace-shell,
+.content-shell {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.feature-page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 16px 0 112px;
+}
+
+.page-card,
+.form-card,
+.page-header-card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(226, 232, 240, 0.82);
+  border-radius: 22px;
+  box-shadow: var(--portalia-shadow-card);
+}
+
+.page-card {
+  padding: 18px;
+}
+
+.form-card {
+  padding: 18px;
+}
+
+.page-header-card {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.page-header-card::after {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  right: -54px;
+  top: -58px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(79, 140, 255, 0.14), rgba(123, 97, 255, 0.12));
+  pointer-events: none;
+}
+
+.page-header-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.page-header-icon,
+.empty-state-icon,
+.profile-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(79, 140, 255, 0.15), rgba(123, 97, 255, 0.12));
+  color: var(--portalia-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.page-header-icon i,
+.empty-state-icon i,
+.profile-stat-icon i {
+  font-size: 22px;
+}
+
+.page-header-eyebrow {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--portalia-primary);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.page-header-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.page-header-subtitle {
+  margin: 5px 0 0;
+  max-width: 580px;
+  color: var(--portalia-text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.page-header-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.compact-icon-link {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFF5F5;
+  color: var(--portalia-danger);
+  border: 1px solid rgba(239, 68, 68, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: var(--portalia-transition);
+}
+
+.compact-icon-link:hover {
+  color: var(--portalia-danger);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.12);
+}
+
+.empty-state {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(226, 232, 240, 0.82);
+  border-radius: 22px;
+  box-shadow: var(--portalia-shadow-card);
+  padding: 34px 20px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 24px;
+  margin-bottom: 16px;
+}
+
+.empty-state-icon i {
+  font-size: 34px;
+}
+
+.empty-state h2,
+.empty-state h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.empty-state p {
+  max-width: 380px;
+  margin: 0 auto 22px;
+  color: var(--portalia-text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.alert-portalia {
+  border: 0;
+  border-radius: 18px;
+  box-shadow: var(--portalia-shadow-soft);
+  font-size: 13px;
 }
 
 .section-heading-row {
@@ -70,7 +250,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-heading-row h2 {
-  font-size: 18px;
+  font-size: 20px;
   margin: 0;
 }
 
@@ -141,8 +321,8 @@ h1, h2, h3, h4, h5, h6 {
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 32px);
-  max-width: 500px;
-  height: 72px;
+  max-width: 520px;
+  height: 68px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -253,7 +433,7 @@ textarea.input-portalia {
 /* Product Marketplace Card */
 .product-card-portalia {
   background: var(--portalia-surface);
-  border-radius: var(--portalia-radius-md);
+  border-radius: 22px;
   overflow: hidden;
   box-shadow: var(--portalia-shadow-card);
   transition: var(--portalia-transition);
@@ -265,14 +445,15 @@ textarea.input-portalia {
 }
 
 .product-card-portalia:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   box-shadow: var(--portalia-shadow-elevated);
 }
 
 .product-card-img-wrapper {
   position: relative;
   width: 100%;
-  padding-top: 78%;
+  height: var(--portalia-card-media-height);
+  padding-top: 0;
   overflow: hidden;
   background-color: var(--portalia-muted-surface);
 }
@@ -293,8 +474,8 @@ textarea.input-portalia {
 
 .product-card-badge {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
   z-index: 10;
   padding: 4px 10px;
   border-radius: var(--portalia-radius-pill);
@@ -311,11 +492,11 @@ textarea.input-portalia {
 
 .product-card-wishlist {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
   z-index: 10;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
@@ -339,7 +520,7 @@ textarea.input-portalia {
 }
 
 .product-card-body {
-  padding: 14px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -348,10 +529,10 @@ textarea.input-portalia {
 .product-card-category {
   align-self: flex-start;
   max-width: 100%;
-  padding: 4px 9px;
+  padding: 3px 8px;
   border-radius: var(--portalia-radius-pill);
   background: rgba(79, 140, 255, 0.1);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   color: var(--portalia-primary);
@@ -362,7 +543,7 @@ textarea.input-portalia {
 }
 
 .product-card-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--portalia-text-primary);
   line-height: 1.4;
@@ -371,11 +552,11 @@ textarea.input-portalia {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 40px;
+  min-height: 38px;
 }
 
 .product-card-price {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--portalia-text-primary);
   margin-top: auto;
@@ -409,9 +590,10 @@ textarea.input-portalia {
 /* Category Filter Slider */
 .category-slider {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  overflow-x: auto;
-  padding: 4px 0 12px;
+  overflow-x: visible;
+  padding: 4px 0 14px;
   scrollbar-width: none; /* Firefox */
 }
 
@@ -420,7 +602,7 @@ textarea.input-portalia {
 }
 
 .category-pill {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   padding: 8px 16px;
   border-radius: var(--portalia-radius-pill);
   background: var(--portalia-surface);
@@ -581,12 +763,13 @@ textarea.input-portalia {
 
 .home-header {
   border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+  min-height: 70px;
 }
 
 .search-bar-wrapper {
   margin-inline: calc(var(--portalia-page-pad) * -1);
   padding-inline: var(--portalia-page-pad) !important;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.45);
+  border-bottom: 0;
 }
 
 .search-box {
@@ -595,9 +778,11 @@ textarea.input-portalia {
 
 .promo-banner {
   margin: 18px 0 !important;
-  min-height: 142px;
+  min-height: auto;
+  padding: 24px !important;
   display: flex;
   align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .promo-banner-content {
@@ -605,7 +790,7 @@ textarea.input-portalia {
 }
 
 .promo-banner-content h3 {
-  font-size: 24px !important;
+  font-size: 20px !important;
 }
 
 .promo-banner-content p {
@@ -614,7 +799,7 @@ textarea.input-portalia {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--portalia-grid-gap);
   align-items: stretch;
 }
@@ -639,6 +824,20 @@ textarea.input-portalia {
   color: var(--portalia-primary);
   text-align: center;
   padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.placeholder-product-img::after,
+.placeholder-product-img-detail::after {
+  content: '';
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  right: -22px;
+  bottom: -22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.54);
 }
 
 .placeholder-product-img-detail {
@@ -646,6 +845,8 @@ textarea.input-portalia {
   gap: 10px;
   padding: 24px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .placeholder-product-img-detail i {
@@ -653,7 +854,9 @@ textarea.input-portalia {
 }
 
 .placeholder-product-img i {
-  font-size: 30px;
+  font-size: 28px;
+  position: relative;
+  z-index: 1;
 }
 
 .placeholder-product-label {
@@ -666,6 +869,8 @@ textarea.input-portalia {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  position: relative;
+  z-index: 1;
 }
 
 .product-detail-layout {
@@ -679,7 +884,7 @@ textarea.input-portalia {
 }
 
 .product-gallery-wrapper {
-  border-radius: var(--portalia-radius-lg);
+  border-radius: 20px;
   box-shadow: var(--portalia-shadow-card);
   border: 1px solid rgba(226, 232, 240, 0.78);
 }
@@ -737,6 +942,439 @@ textarea.input-portalia {
   margin-inline: auto;
 }
 
+.profile-dashboard-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.profile-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-summary-card .profile-avatar-lg,
+.profile-avatar-lg {
+  width: 84px;
+  height: 84px;
+  border-radius: 28px;
+  object-fit: cover;
+  border: 4px solid #FFFFFF;
+  box-shadow: var(--portalia-shadow-soft);
+  margin-bottom: 0;
+}
+
+.profile-summary-card .profile-username,
+.profile-username {
+  margin: 0 0 5px;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.profile-summary-card .profile-meta-text,
+.profile-meta-text {
+  margin: 0;
+  color: var(--portalia-text-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.profile-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 1px solid rgba(226, 232, 240, 0.82);
+}
+
+.profile-stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+}
+
+.profile-stat-card .stat-val,
+.stat-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--portalia-text-primary);
+  display: block;
+}
+
+.profile-stat-card .stat-lbl,
+.stat-lbl {
+  font-size: 11px;
+  color: var(--portalia-text-secondary);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.listing-panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+.listing-panel-header {
+  padding: 18px 18px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.listing-panel-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.listing-panel .profile-tabs,
+.profile-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 18px 16px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.82);
+  background: transparent;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.profile-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.listing-panel .profile-tab-btn,
+.profile-tab-btn {
+  padding: 9px 14px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: var(--portalia-radius-pill);
+  background: #FFFFFF;
+  color: var(--portalia-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: var(--portalia-transition);
+}
+
+.listing-panel .profile-tab-btn.active,
+.listing-panel .profile-tab-btn:hover,
+.profile-tab-btn.active,
+.profile-tab-btn:hover {
+  color: var(--portalia-primary);
+  background: rgba(79, 140, 255, 0.09);
+  border-color: rgba(79, 140, 255, 0.2);
+}
+
+.listing-panel-body {
+  padding: 18px;
+}
+
+.listing-list {
+  display: grid;
+  gap: 12px;
+}
+
+.listing-list .my-product-item,
+.my-product-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 18px;
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.82);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  margin-bottom: 0;
+}
+
+.listing-list .my-product-thumb,
+.listing-list .my-product-placeholder-thumb,
+.my-product-thumb,
+.my-product-placeholder-thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.listing-list .my-product-thumb,
+.my-product-thumb {
+  object-fit: cover;
+}
+
+.listing-list .my-product-placeholder-thumb,
+.my-product-placeholder-thumb {
+  color: var(--portalia-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.listing-list .my-product-info,
+.my-product-info {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.listing-list .my-product-title,
+.my-product-title {
+  margin: 0 0 5px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listing-list .my-product-price,
+.my-product-price {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--portalia-primary);
+}
+
+.delete-listing-btn {
+  background: #FFF5F5 !important;
+  color: var(--portalia-danger) !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(239, 68, 68, 0.12);
+  flex-shrink: 0;
+}
+
+.wishlist-toolbar {
+  display: grid;
+  gap: 16px;
+}
+
+.wishlist-toolbar .search-bar-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.chat-inbox-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.chat-thread-list,
+.chat-preview-panel,
+.chat-conversation-card {
+  overflow: hidden;
+}
+
+.chat-thread-list-header,
+.chat-preview-panel {
+  padding: 18px;
+}
+
+.chat-thread-list-header h2,
+.chat-preview-panel h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.chat-thread-list-header p,
+.chat-preview-panel p {
+  margin: 0;
+  color: var(--portalia-text-secondary);
+  font-size: 13px;
+}
+
+.chat-thread-items {
+  display: grid;
+  padding: 0 10px 10px;
+}
+
+.chat-thread-items .chat-thread-item,
+.chat-thread-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: var(--portalia-transition);
+}
+
+.chat-thread-items .chat-thread-item:hover,
+.chat-thread-item:hover {
+  background-color: rgba(79, 140, 255, 0.07);
+  border-color: rgba(79, 140, 255, 0.12);
+}
+
+.chat-thread-items .thread-avatar,
+.thread-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 18px;
+  object-fit: cover;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.chat-preview-panel {
+  min-height: 320px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.chat-preview-panel .empty-state-icon {
+  margin-inline: auto;
+}
+
+.chat-conversation-card {
+  display: flex;
+  min-height: calc(100vh - 170px);
+  flex-direction: column;
+}
+
+.chat-conversation-card .chat-header {
+  position: static;
+  margin: 0;
+  padding: 16px !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.82);
+}
+
+.chat-conversation-card .product-context-bar {
+  background: #F8FAFC;
+}
+
+.chat-conversation-card .chat-bubble-container {
+  max-width: none;
+  margin: 0;
+  padding: 18px;
+}
+
+.feature-page .chat-input-bar {
+  max-width: min(100% - 32px, 960px) !important;
+  border-top: 1px solid #E5E7EB;
+}
+
+.form-shell {
+  max-width: 980px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.form-card .wizard-steps {
+  margin-bottom: 24px;
+}
+
+.form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.form-section-title i {
+  color: var(--portalia-primary);
+}
+
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.form-grid.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-card .image-upload-area,
+.image-upload-area {
+  border: 2px dashed #CBD5E1;
+  border-radius: 22px;
+  padding: 34px 18px;
+  text-align: center;
+  cursor: pointer;
+  background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+  transition: var(--portalia-transition);
+  position: relative;
+}
+
+.form-card .image-upload-area:hover,
+.image-upload-area:hover {
+  border-color: var(--portalia-primary);
+  background: #F0F7FF;
+}
+
+.form-card .image-upload-area i,
+.image-upload-area i {
+  font-size: 38px;
+  color: var(--portalia-primary);
+  margin-bottom: 8px;
+}
+
+.form-card .preview-box,
+.preview-box {
+  display: none;
+  width: 100%;
+  height: 220px;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-top: 12px;
+  box-shadow: var(--portalia-shadow-soft);
+}
+
+.form-card .preview-box img,
+.preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.form-card .calculator-card,
+.calculator-card {
+  background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+  border: 1px solid rgba(79, 140, 255, 0.15);
+}
+
+.form-card .calculator-row,
+.calculator-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  font-size: 13px;
+}
+
+.form-card .calculator-row:last-child,
+.calculator-row:last-child {
+  border-bottom: none;
+  padding-top: 16px;
+}
+
 @media (hover: none) {
   .product-card-portalia:hover,
   .card-portalia:hover,
@@ -752,27 +1390,206 @@ textarea.input-portalia {
 
 @media (min-width: 576px) {
   :root {
-    --portalia-grid-gap: 18px;
+    --portalia-grid-gap: 20px;
+    --portalia-card-media-height: 160px;
   }
 
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  }
+}
+
+@media (max-width: 379.98px) {
+  .product-grid {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (min-width: 992px) {
   :root {
-    --portalia-page-pad: 24px;
-    --portalia-grid-gap: 20px;
+    --portalia-page-pad: 0px;
+    --portalia-grid-gap: 28px;
+    --portalia-card-media-height: 198px;
   }
 
   body {
-    padding-bottom: 28px;
+    padding-bottom: 0;
+  }
+
+  .bottom-nav {
+    display: none !important;
+  }
+
+  .desktop-navbar {
+    display: flex;
+    position: sticky;
+    top: 16px;
+    z-index: 1050;
+    width: 100%;
+    min-height: 72px;
+    margin: 16px 0 24px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    overflow: hidden;
+  }
+
+  .desktop-navbar-inner {
+    width: 100%;
+    min-height: 72px;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .desktop-brand {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--portalia-primary);
+    text-decoration: none;
+    letter-spacing: 0;
+  }
+
+  .desktop-nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .desktop-nav-links a {
+    color: var(--portalia-text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--portalia-transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: var(--portalia-radius-pill);
+    position: relative;
+  }
+
+  .desktop-nav-links a i {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  .desktop-nav-links a:hover,
+  .desktop-nav-links a.active {
+    color: var(--portalia-primary);
+    background: rgba(79, 140, 255, 0.09);
+  }
+
+  .desktop-nav-links a.active::after {
+    content: none;
+  }
+
+  .desktop-nav-action {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .desktop-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: var(--portalia-radius-pill);
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    background: var(--portalia-surface);
+    transition: var(--portalia-transition);
+  }
+
+  .desktop-user-profile:hover {
+    background: var(--portalia-bg);
+    border-color: #D1D5DB;
+  }
+
+  .desktop-user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .desktop-user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--portalia-text-primary);
   }
 
   .app-container {
     width: min(100% - 48px, var(--portalia-page-max));
     padding-inline: 0;
+  }
+
+  .page-shell,
+  .marketplace-shell,
+  .content-shell {
+    width: min(100% - 48px, var(--portalia-page-max));
+  }
+
+  .feature-page {
+    padding-top: 0;
+    padding-bottom: 48px;
+  }
+
+  .page-card,
+  .form-card {
+    padding: 24px;
+    border-radius: 24px;
+  }
+
+  .page-header-card {
+    padding: 24px;
+    border-radius: 24px;
+  }
+
+  .page-header-title {
+    font-size: 24px;
+  }
+
+  .profile-dashboard-grid {
+    grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+    align-items: start;
+  }
+
+  .profile-summary-card {
+    position: sticky;
+    top: 112px;
+  }
+
+  .profile-identity {
+    align-items: flex-start;
+  }
+
+  .chat-inbox-layout {
+    grid-template-columns: minmax(360px, 0.85fr) minmax(0, 1.15fr);
+    align-items: stretch;
+  }
+
+  .chat-preview-panel {
+    display: flex;
+  }
+
+  .chat-thread-list,
+  .chat-preview-panel,
+  .chat-conversation-card {
+    min-height: 560px;
+  }
+
+  .form-grid.two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .home-header,
@@ -789,15 +1606,50 @@ textarea.input-portalia {
 
   .home-header {
     border-radius: 0 0 var(--portalia-radius-lg) var(--portalia-radius-lg);
+    padding: 22px 0 18px !important;
+    background: transparent !important;
+    border-bottom: 0;
+  }
+
+  .search-bar-wrapper {
+    position: static !important;
+    z-index: auto !important;
+    margin: 0 0 24px !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .search-box {
+    min-height: 58px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+  }
+
+  .search-box .input-portalia {
+    height: 58px;
+    border: 0 !important;
+    border-radius: 20px;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .promo-banner {
+    min-height: 200px;
+    padding: 40px !important;
+    border-radius: 24px !important;
+    margin: 0 0 24px !important;
   }
 
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 28px;
   }
 
   .product-card-img-wrapper {
-    padding-top: 74%;
+    height: var(--portalia-card-media-height);
+    padding-top: 0 !important;
   }
 
   .product-card-title {
@@ -807,11 +1659,6 @@ textarea.input-portalia {
 
   .product-card-price {
     font-size: 18px;
-  }
-
-  .bottom-nav {
-    max-width: 620px;
-    bottom: 20px;
   }
 
   .product-detail-layout {
@@ -865,8 +1712,8 @@ textarea.input-portalia {
 
 @media (min-width: 1200px) {
   .promo-banner {
-    min-height: 168px;
-    padding: 28px !important;
+    min-height: 200px;
+    padding: 40px !important;
   }
 
   .promo-banner-content h3 {
@@ -878,18 +1725,24 @@ textarea.input-portalia {
   }
 }
 
+@media (min-width: 1400px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
 @media (max-width: 575.98px) {
   .section-heading-row {
     align-items: flex-end;
   }
 
   .section-heading-row h2 {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .bottom-nav {
     height: 66px;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 0;
   }
 
   .bottom-nav-item {
@@ -905,6 +1758,49 @@ textarea.input-portalia {
     width: 100%;
     max-width: none;
     padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .page-header-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .page-header-actions {
+    width: 100%;
+  }
+
+  .page-header-actions .btn {
+    width: 100%;
+  }
+
+  .profile-identity {
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-actions {
+    justify-content: center;
+  }
+
+  .profile-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid.two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-conversation-card {
+    min-height: calc(100vh - 120px);
+    margin-inline: calc(var(--portalia-page-pad) * -1);
+    border-radius: 0;
+    border-inline: 0;
+  }
+
+  .chat-input-bar {
+    max-width: none !important;
+    border-radius: 0;
   }
 }
 

@@ -143,33 +143,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <div class="app-container">
 
-    <!-- NAVIGATION -->
-    <nav class="upload-nav">
-      <div style="width: 40px;"></div>
-      <span class="fw-bold" style="font-size: 16px;">Upload Product</span>
-      <div style="width: 40px;"></div>
-    </nav>
+    <!-- DESKTOP NAVBAR (visible on ≥992px) -->
+    <?php include '_desktop_navbar.php'; ?>
 
-    <div class="wizard-container">
-      
-      <!-- WIZARD STEP WORKFLOW INDICATOR -->
-      <div class="wizard-steps">
-        <div class="wizard-step active" id="step-dot-1">1</div>
-        <div class="wizard-step" id="step-dot-2">2</div>
-        <div class="wizard-step" id="step-dot-3">3</div>
-      </div>
+    <main class="feature-page">
+      <section class="page-header-card">
+        <div class="page-header-main">
+          <span class="page-header-icon"><i class="bi bi-plus-circle-fill"></i></span>
+          <div>
+            <span class="page-header-eyebrow">Sell on campus</span>
+            <h1 class="page-header-title">Upload Product</h1>
+            <p class="page-header-subtitle">List an item for your campus marketplace with clear details and pricing.</p>
+          </div>
+        </div>
+        <div class="page-header-actions">
+          <a href="profile.php?tab=pending" class="btn btn-portalia-secondary" style="height: 44px; padding: 0 18px !important; font-size: 13px;">
+            <i class="bi bi-box-seam me-2"></i>My Listings
+          </a>
+        </div>
+      </section>
 
       <?php if (!empty($error)): ?>
-        <div class="alert alert-danger mb-4" style="border-radius: var(--portalia-radius-sm); font-size: 13px;">
+        <div class="alert alert-danger alert-portalia mb-0">
           <i class="bi bi-exclamation-triangle-fill me-2"></i> <?php echo $error; ?>
         </div>
       <?php endif; ?>
 
-      <form action="upload.php" method="POST" enctype="multipart/form-data" id="uploadForm">
+      <section class="form-shell">
+        <form action="upload.php" method="POST" enctype="multipart/form-data" id="uploadForm" class="form-card">
+          <!-- WIZARD STEP WORKFLOW INDICATOR -->
+          <div class="wizard-steps">
+            <div class="wizard-step active" id="step-dot-1">1</div>
+            <div class="wizard-step" id="step-dot-2">2</div>
+            <div class="wizard-step" id="step-dot-3">3</div>
+          </div>
         
         <!-- STEP 1: IMAGES & BASIC INFO -->
         <div class="step-section active" id="step-1">
-          <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 16px;">Product Visuals & Name</h2>
+          <h2 class="form-section-title"><i class="bi bi-card-image"></i>Product Information</h2>
           
           <div class="form-group-portalia">
             <label>Product Image</label>
@@ -201,40 +212,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- STEP 2: ATTRIBUTES -->
         <div class="step-section" id="step-2">
-          <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 16px;">Product Attributes</h2>
+          <h2 class="form-section-title"><i class="bi bi-sliders"></i>Category & Condition</h2>
 
-          <div class="form-group-portalia">
-            <label for="category_id">Category</label>
-            <select name="category_id" id="category_id" class="input-portalia input-glow" required style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%274%27 height=%275%27%3E%3Cpath fill=%27%236B7280%27 d=%27M2 0L0 2h4zm0 5L0 3h4z%27/%3E%3C/svg%3E') no-repeat right 16px center/8px 10px; background-color: var(--portalia-surface);">
-              <option value="" disabled selected>Select category</option>
-              <?php foreach ($categories as $cat): ?>
-                <option value="<?php echo $cat['id']; ?>"><?php echo sanitize($cat['name']); ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-
-          <div class="form-group-portalia">
-            <label for="condition">Condition</label>
-            <select name="condition" id="condition" class="input-portalia input-glow" required style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%274%27 height=%275%27%3E%3Cpath fill=%27%236B7280%27 d=%27M2 0L0 2h4zm0 5L0 3h4z%27/%3E%3C/svg%3E') no-repeat right 16px center/8px 10px; background-color: var(--portalia-surface);">
-              <option value="" disabled selected>Select item condition</option>
-              <option value="new">Brand New</option>
-              <option value="like_new">Like New</option>
-              <option value="used">Used / Secondhand</option>
-            </select>
-          </div>
-
-          <div class="row">
-            <div class="col-6">
-              <div class="form-group-portalia">
-                <label for="stock">Stock Available</label>
-                <input type="number" name="stock" id="stock" class="input-portalia input-glow" min="1" value="1" required>
-              </div>
+          <div class="form-grid two-col">
+            <div class="form-group-portalia">
+              <label for="category_id">Category</label>
+              <select name="category_id" id="category_id" class="input-portalia input-glow" required style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%274%27 height=%275%27%3E%3Cpath fill=%27%236B7280%27 d=%27M2 0L0 2h4zm0 5L0 3h4z%27/%3E%3C/svg%3E') no-repeat right 16px center/8px 10px; background-color: var(--portalia-surface);">
+                <option value="" disabled selected>Select category</option>
+                <?php foreach ($categories as $cat): ?>
+                  <option value="<?php echo $cat['id']; ?>"><?php echo sanitize($cat['name']); ?></option>
+                <?php endforeach; ?>
+              </select>
             </div>
-            <div class="col-6">
-              <div class="form-group-portalia">
-                <label for="expiration_date">Listing Expiry Date</label>
-                <input type="date" name="expiration_date" id="expiration_date" class="input-portalia input-glow" required value="<?php echo date('Y-m-d', strtotime('+3 months')); ?>">
-              </div>
+
+            <div class="form-group-portalia">
+              <label for="condition">Condition</label>
+              <select name="condition" id="condition" class="input-portalia input-glow" required style="background: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%274%27 height=%275%27%3E%3Cpath fill=%27%236B7280%27 d=%27M2 0L0 2h4zm0 5L0 3h4z%27/%3E%3C/svg%3E') no-repeat right 16px center/8px 10px; background-color: var(--portalia-surface);">
+                <option value="" disabled selected>Select item condition</option>
+                <option value="new">Brand New</option>
+                <option value="like_new">Like New</option>
+                <option value="used">Used / Secondhand</option>
+              </select>
+            </div>
+
+            <div class="form-group-portalia">
+              <label for="stock">Stock Available</label>
+              <input type="number" name="stock" id="stock" class="input-portalia input-glow" min="1" value="1" required>
+            </div>
+
+            <div class="form-group-portalia">
+              <label for="expiration_date">Listing Expiry Date</label>
+              <input type="date" name="expiration_date" id="expiration_date" class="input-portalia input-glow" required value="<?php echo date('Y-m-d', strtotime('+3 months')); ?>">
             </div>
           </div>
 
@@ -246,7 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- STEP 3: FINANCIAL DETAILS & PRICE -->
         <div class="step-section" id="step-3">
-          <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 16px;">Product Pricing & Settings</h2>
+          <h2 class="form-section-title"><i class="bi bi-cash-coin"></i>Price & Stock</h2>
 
           <div class="form-group-portalia">
             <label for="price">Selling Price (IDR)</label>
@@ -279,8 +287,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
 
-      </form>
-    </div>
+        </form>
+      </section>
+    </main>
 
     <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">

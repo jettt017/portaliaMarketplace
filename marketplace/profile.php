@@ -245,108 +245,146 @@ $my_products = $stmt->fetchAll();
 
   <div class="app-container">
 
-    <!-- HEADER NAVIGATION -->
-    <nav class="profile-nav-header">
-      <div style="width: 40px;"></div>
-      <span class="fw-bold" style="font-size: 16px;">My Profile</span>
-      <a href="logout.php" class="action-icon-btn text-danger" title="Sign Out"><i class="bi bi-box-arrow-right"></i></a>
-    </nav>
+    <!-- DESKTOP NAVBAR (visible on ≥992px) -->
+    <?php include '_desktop_navbar.php'; ?>
 
-    <!-- SUCCESS & ERROR FEEDBACK -->
-    <?php if (!empty($success)): ?>
-      <div class="alert alert-success m-3" style="border-radius: var(--portalia-radius-sm); font-size: 13px;">
-        <i class="bi bi-check-circle-fill me-2"></i> <?php echo $success; ?>
-      </div>
-    <?php endif; ?>
-    <?php if (!empty($error)): ?>
-      <div class="alert alert-danger m-3" style="border-radius: var(--portalia-radius-sm); font-size: 13px;">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i> <?php echo $error; ?>
-      </div>
-    <?php endif; ?>
-
-    <!-- PROFILE HERO COVER & AVATAR -->
-    <div class="profile-hero-section">
-      <img src="../<?php echo sanitize($user['avatar']); ?>" alt="Profile avatar" class="profile-avatar-lg" onerror="this.src='../assets/images/avatar/avatar.jpg'">
-      <h1 class="profile-username"><?php echo sanitize($user['username']); ?></h1>
-      <p class="profile-meta-text"><?php echo sanitize($user['email']); ?> • NIM: <?php echo sanitize($user['nim']); ?></p>
-      
-      <button class="btn btn-portalia-secondary" style="height: 40px; font-size: 13px; padding: 0 16px !important;" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-        <i class="bi bi-pencil-square me-2"></i> Edit Profile
-      </button>
-    </div>
-
-    <!-- STATS PANEL CARD -->
-    <div class="stats-row">
-      <div class="stat-item">
-        <span class="stat-val"><?php echo $active_count; ?></span>
-        <span class="stat-lbl">Active</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-val"><?php echo $sold_count; ?></span>
-        <span class="stat-lbl">Sold</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-val"><?php echo $wishlist_count; ?></span>
-        <span class="stat-lbl">Wishlist</span>
-      </div>
-    </div>
-
-    <!-- STATUS TABS NAVIGATION -->
-    <div class="profile-tabs">
-      <a href="profile.php?tab=active" class="profile-tab-btn <?php echo $active_tab === 'active' ? 'active' : ''; ?>">
-        Active (<?php echo $active_tab === 'active' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'active'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
-      </a>
-      <a href="profile.php?tab=pending" class="profile-tab-btn <?php echo $active_tab === 'pending' ? 'active' : ''; ?>">
-        Pending (<?php echo $active_tab === 'pending' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'pending'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
-      </a>
-      <a href="profile.php?tab=rejected" class="profile-tab-btn <?php echo $active_tab === 'rejected' ? 'active' : ''; ?>">
-        Rejected (<?php echo $active_tab === 'rejected' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'rejected'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
-      </a>
-      <a href="profile.php?tab=expired" class="profile-tab-btn <?php echo $active_tab === 'expired' ? 'active' : ''; ?>">
-        Expired / Sold (<?php echo $active_tab === 'expired' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'expired'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
-      </a>
-    </div>
-
-    <!-- PRODUCT LIST FOR ACTIVE TAB -->
-    <main class="p-3 pb-5">
-      <?php if (count($my_products) == 0): ?>
-        <div class="text-center py-5 text-muted">
-          <i class="bi bi-folder2-open" style="font-size: 48px; opacity: 0.5; color: var(--portalia-text-secondary);"></i>
-          <p class="mt-3 mb-0" style="font-size: 13px;">No items found in this tab.</p>
+    <main class="feature-page">
+      <section class="page-header-card">
+        <div class="page-header-main">
+          <span class="page-header-icon"><i class="bi bi-person-fill"></i></span>
+          <div>
+            <span class="page-header-eyebrow">Student account</span>
+            <h1 class="page-header-title">My Profile</h1>
+            <p class="page-header-subtitle">Manage your listings, wishlist, and student account.</p>
+          </div>
         </div>
-      <?php else: ?>
-        <div>
-          <?php foreach ($my_products as $my_prod): ?>
-            <div class="my-product-item">
-              <?php if (!empty($my_prod['image']) && file_exists(__DIR__ . '/../' . $my_prod['image'])): ?>
-                <img src="../<?php echo sanitize($my_prod['image']); ?>" alt="Thumbnail" class="my-product-thumb">
-              <?php else: ?>
-                <div class="my-product-placeholder-thumb">
-                  <i class="bi bi-image"></i>
-                </div>
-              <?php endif; ?>
-              
-              <div class="my-product-info">
-                <h3 class="my-product-title"><?php echo sanitize($my_prod['name']); ?></h3>
-                <span class="my-product-price"><?php echo formatRupiah($my_prod['price']); ?></span>
-                <span class="text-muted d-block" style="font-size: 11px;">Stock: <?php echo $my_prod['stock']; ?> | <?php echo sanitize($my_prod['category_name']); ?></span>
-                <?php if ($active_tab === 'rejected' && !empty($my_prod['rejection_reason'])): ?>
-                  <span class="text-danger d-block mt-1" style="font-size: 11px;">Reason: <?php echo sanitize($my_prod['rejection_reason']); ?></span>
-                <?php endif; ?>
-              </div>
+        <div class="page-header-actions">
+          <a href="logout.php" class="compact-icon-link" title="Sign Out" aria-label="Sign out"><i class="bi bi-box-arrow-right"></i></a>
+        </div>
+      </section>
 
-              <!-- Delete button -->
-              <a href="profile.php?tab=<?php echo $active_tab; ?>&delete_id=<?php echo $my_prod['id']; ?>" 
-                 class="action-icon-btn text-danger" 
-                 style="background: #FFF5F5; width: 36px; height: 36px; border-radius: 50%;" 
-                 onclick="return confirm('Are you sure you want to delete this listing permanently?');"
-                 aria-label="Delete listing">
-                <i class="bi bi-trash"></i>
-              </a>
-            </div>
-          <?php endforeach; ?>
+      <?php if (!empty($success)): ?>
+        <div class="alert alert-success alert-portalia mb-0">
+          <i class="bi bi-check-circle-fill me-2"></i> <?php echo $success; ?>
         </div>
       <?php endif; ?>
+      <?php if (!empty($error)): ?>
+        <div class="alert alert-danger alert-portalia mb-0">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i> <?php echo $error; ?>
+        </div>
+      <?php endif; ?>
+
+      <section class="profile-dashboard-grid">
+        <aside class="page-card profile-summary-card">
+          <div class="profile-identity">
+            <img src="../<?php echo sanitize($user['avatar']); ?>" alt="Profile avatar" class="profile-avatar-lg" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+            <div>
+              <h2 class="profile-username"><?php echo sanitize($user['username']); ?></h2>
+              <p class="profile-meta-text"><?php echo sanitize($user['email']); ?><br>NIM: <?php echo sanitize($user['nim']); ?></p>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="btn btn-portalia-secondary" style="height: 44px; font-size: 13px; padding: 0 18px !important;" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+              <i class="bi bi-pencil-square me-2"></i>Edit Profile
+            </button>
+            <a href="upload.php" class="btn btn-portalia-primary" style="height: 44px; font-size: 13px; padding: 0 18px !important;">
+              <i class="bi bi-plus-circle me-2"></i>New Listing
+            </a>
+          </div>
+
+          <div class="profile-stats-grid">
+            <div class="profile-stat-card">
+              <span class="profile-stat-icon"><i class="bi bi-bag-check"></i></span>
+              <div>
+                <span class="stat-val"><?php echo $active_count; ?></span>
+                <span class="stat-lbl">Active</span>
+              </div>
+            </div>
+            <div class="profile-stat-card">
+              <span class="profile-stat-icon"><i class="bi bi-receipt"></i></span>
+              <div>
+                <span class="stat-val"><?php echo $sold_count; ?></span>
+                <span class="stat-lbl">Sold</span>
+              </div>
+            </div>
+            <div class="profile-stat-card">
+              <span class="profile-stat-icon"><i class="bi bi-heart"></i></span>
+              <div>
+                <span class="stat-val"><?php echo $wishlist_count; ?></span>
+                <span class="stat-lbl">Wishlist</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="page-card listing-panel">
+          <div class="listing-panel-header">
+            <div>
+              <h2>My Listings</h2>
+              <span class="section-meta"><?php echo count($my_products); ?> items in this tab</span>
+            </div>
+          </div>
+
+          <div class="profile-tabs">
+            <a href="profile.php?tab=active" class="profile-tab-btn <?php echo $active_tab === 'active' ? 'active' : ''; ?>">
+              Active (<?php echo $active_tab === 'active' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'active'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
+            </a>
+            <a href="profile.php?tab=pending" class="profile-tab-btn <?php echo $active_tab === 'pending' ? 'active' : ''; ?>">
+              Pending (<?php echo $active_tab === 'pending' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'pending'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
+            </a>
+            <a href="profile.php?tab=rejected" class="profile-tab-btn <?php echo $active_tab === 'rejected' ? 'active' : ''; ?>">
+              Rejected (<?php echo $active_tab === 'rejected' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'rejected'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
+            </a>
+            <a href="profile.php?tab=expired" class="profile-tab-btn <?php echo $active_tab === 'expired' ? 'active' : ''; ?>">
+              Expired / Sold (<?php echo $active_tab === 'expired' ? count($my_products) : ( ($stmt = $db->prepare("SELECT COUNT(*) FROM products WHERE seller_id = ? AND status = 'expired'")) && $stmt->execute([$current_user_id]) ? $stmt->fetchColumn() : 0 ); ?>)
+            </a>
+          </div>
+
+          <div class="listing-panel-body">
+            <?php if (count($my_products) == 0): ?>
+              <div class="empty-state">
+                <div class="empty-state-icon">
+                  <i class="bi bi-folder2-open"></i>
+                </div>
+                <h2>No items found</h2>
+                <p>No listings are currently available in this status tab.</p>
+                <a href="upload.php" class="btn btn-portalia-primary">Create Listing</a>
+              </div>
+            <?php else: ?>
+              <div class="listing-list">
+                <?php foreach ($my_products as $my_prod): ?>
+                  <div class="my-product-item">
+                    <?php if (!empty($my_prod['image']) && file_exists(__DIR__ . '/../' . $my_prod['image'])): ?>
+                      <img src="../<?php echo sanitize($my_prod['image']); ?>" alt="Thumbnail" class="my-product-thumb">
+                    <?php else: ?>
+                      <div class="my-product-placeholder-thumb">
+                        <i class="bi bi-image"></i>
+                      </div>
+                    <?php endif; ?>
+
+                    <div class="my-product-info">
+                      <h3 class="my-product-title"><?php echo sanitize($my_prod['name']); ?></h3>
+                      <span class="my-product-price"><?php echo formatRupiah($my_prod['price']); ?></span>
+                      <span class="text-muted d-block" style="font-size: 11px;">Stock: <?php echo $my_prod['stock']; ?> | <?php echo sanitize($my_prod['category_name']); ?></span>
+                      <?php if ($active_tab === 'rejected' && !empty($my_prod['rejection_reason'])): ?>
+                        <span class="text-danger d-block mt-1" style="font-size: 11px;">Reason: <?php echo sanitize($my_prod['rejection_reason']); ?></span>
+                      <?php endif; ?>
+                    </div>
+
+                    <a href="profile.php?tab=<?php echo $active_tab; ?>&delete_id=<?php echo $my_prod['id']; ?>"
+                       class="action-icon-btn delete-listing-btn"
+                       onclick="return confirm('Are you sure you want to delete this listing permanently?');"
+                       aria-label="Delete listing">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+          </div>
+        </section>
+      </section>
     </main>
 
     <!-- EDIT PROFILE MODAL DIALOG -->

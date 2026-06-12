@@ -179,6 +179,9 @@ $bought = isset($_GET['bought']) && $_GET['bought'] == 1;
 
   <div class="app-container">
 
+    <!-- DESKTOP NAVBAR (visible on ≥992px) -->
+    <?php include '_desktop_navbar.php'; ?>
+
     <!-- TOP NAVIGATION -->
     <nav class="detail-nav">
       <a href="index.php" class="action-icon-btn" aria-label="Go back"><i class="bi bi-arrow-left"></i></a>

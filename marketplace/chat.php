@@ -278,58 +278,66 @@ if ($receiver_id > 0) {
 
   <div class="app-container">
 
-    <!-- VIEW 1: ACTIVE CHAT SCREEN -->
+    <!-- DESKTOP NAVBAR (visible on ≥992px) -->
+    <?php include '_desktop_navbar.php'; ?>
+
     <?php if ($receiver_id > 0): ?>
-      <header class="chat-header">
-        <div class="chat-header-user">
-          <a href="chat.php" class="action-icon-btn me-1" aria-label="Back"><i class="bi bi-arrow-left"></i></a>
-          <img src="../<?php echo sanitize($receiver_user['avatar']); ?>" alt="Avatar" class="chat-header-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
-          <div class="chat-header-info">
-            <h2><?php echo sanitize($receiver_user['username']); ?></h2>
-            <span><i class="bi bi-dot" style="font-size: 20px; vertical-align: middle; line-height: 1;"></i>Active Now</span>
-          </div>
-        </div>
-        <div style="width: 40px;"></div> <!-- Spacer -->
-      </header>
-
-      <?php if ($product_context): ?>
-        <div class="product-context-bar">
-          <?php if (!empty($product_context['image']) && file_exists(__DIR__ . '/../' . $product_context['image'])): ?>
-            <img src="../<?php echo sanitize($product_context['image']); ?>" alt="Product" class="product-context-thumb">
-          <?php else: ?>
-            <div class="product-context-thumb bg-secondary text-white d-flex align-items-center justify-content-center" style="font-size: 12px;"><i class="bi bi-image"></i></div>
-          <?php endif; ?>
-          <div class="flex-grow-1 min-width-0">
-            <span class="fw-semibold d-block text-truncate" style="font-size: 12px;"><?php echo sanitize($product_context['name']); ?></span>
-            <span class="text-primary fw-bold" style="font-size: 11px;"><?php echo formatRupiah($product_context['price']); ?></span>
-          </div>
-        </div>
-      <?php endif; ?>
-
-      <!-- SCROLL MESSAGES -->
-      <main class="chat-bubble-container" id="chatBox" style="padding-bottom: 90px;">
-        <?php if (count($messages) == 0): ?>
-          <div class="text-center py-4 text-muted" style="font-size: 12px;">
-            No messages yet. Send a greeting to start chatting!
-          </div>
-        <?php else: ?>
-          <?php foreach ($messages as $msg): ?>
-            <?php $is_me = ($msg['sender_id'] == $current_user_id); ?>
-            <div class="chat-bubble <?php echo $is_me ? 'sent' : 'received'; ?>">
-              <?php echo sanitize($msg['message']); ?>
-              <span class="chat-time"><?php echo date('H:i', strtotime($msg['created_at'])); ?></span>
+      <main class="feature-page">
+        <section class="page-card chat-conversation-card">
+          <header class="chat-header">
+            <div class="chat-header-user">
+              <a href="chat.php" class="action-icon-btn me-1" aria-label="Back"><i class="bi bi-arrow-left"></i></a>
+              <img src="../<?php echo sanitize($receiver_user['avatar']); ?>" alt="Avatar" class="chat-header-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+              <div class="chat-header-info">
+                <h2><?php echo sanitize($receiver_user['username']); ?></h2>
+                <span><i class="bi bi-dot" style="font-size: 20px; vertical-align: middle; line-height: 1;"></i>Active Now</span>
+              </div>
             </div>
-          <?php endforeach; ?>
-        <?php endif; ?>
-      </main>
+            <a href="index.php" class="action-icon-btn" aria-label="Marketplace"><i class="bi bi-shop"></i></a>
+          </header>
 
-      <!-- BOTTOM SEND MESSAGE BAR -->
-      <form action="chat.php?receiver_id=<?php echo $receiver_id; ?><?php echo $product_id ? '&product_id=' . $product_id : ''; ?>" method="POST" class="chat-input-bar">
-        <input type="text" name="message" class="input-portalia input-glow" placeholder="Type a message..." required autocomplete="off">
-        <button type="submit" name="send_message" class="btn btn-portalia-primary" style="height: 52px; width: 52px; padding: 0 !important; border-radius: 50% !important; flex-shrink: 0;" aria-label="Send message">
-          <i class="bi bi-send-fill" style="margin: 0;"></i>
-        </button>
-      </form>
+          <?php if ($product_context): ?>
+            <div class="product-context-bar">
+              <?php if (!empty($product_context['image']) && file_exists(__DIR__ . '/../' . $product_context['image'])): ?>
+                <img src="../<?php echo sanitize($product_context['image']); ?>" alt="Product" class="product-context-thumb">
+              <?php else: ?>
+                <div class="product-context-thumb bg-secondary text-white d-flex align-items-center justify-content-center" style="font-size: 12px;"><i class="bi bi-image"></i></div>
+              <?php endif; ?>
+              <div class="flex-grow-1 min-width-0">
+                <span class="fw-semibold d-block text-truncate" style="font-size: 12px;"><?php echo sanitize($product_context['name']); ?></span>
+                <span class="text-primary fw-bold" style="font-size: 11px;"><?php echo formatRupiah($product_context['price']); ?></span>
+              </div>
+            </div>
+          <?php endif; ?>
+
+          <main class="chat-bubble-container" id="chatBox" style="padding-bottom: 90px;">
+            <?php if (count($messages) == 0): ?>
+              <div class="empty-state">
+                <div class="empty-state-icon">
+                  <i class="bi bi-chat-dots"></i>
+                </div>
+                <h2>No messages yet</h2>
+                <p>Send a greeting to start coordinating this campus transaction.</p>
+              </div>
+            <?php else: ?>
+              <?php foreach ($messages as $msg): ?>
+                <?php $is_me = ($msg['sender_id'] == $current_user_id); ?>
+                <div class="chat-bubble <?php echo $is_me ? 'sent' : 'received'; ?>">
+                  <?php echo sanitize($msg['message']); ?>
+                  <span class="chat-time"><?php echo date('H:i', strtotime($msg['created_at'])); ?></span>
+                </div>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </main>
+        </section>
+
+        <form action="chat.php?receiver_id=<?php echo $receiver_id; ?><?php echo $product_id ? '&product_id=' . $product_id : ''; ?>" method="POST" class="chat-input-bar">
+          <input type="text" name="message" class="input-portalia input-glow" placeholder="Type a message..." required autocomplete="off">
+          <button type="submit" name="send_message" class="btn btn-portalia-primary" style="height: 52px; width: 52px; padding: 0 !important; border-radius: 50% !important; flex-shrink: 0;" aria-label="Send message">
+            <i class="bi bi-send-fill" style="margin: 0;"></i>
+          </button>
+        </form>
+      </main>
 
       <script>
         // Auto scroll messages to the bottom
@@ -337,57 +345,81 @@ if ($receiver_id > 0) {
         box.scrollTop = box.scrollHeight;
       </script>
 
-    <!-- VIEW 2: THREADS CONVERSATION LIST -->
     <?php else: ?>
-      <header class="chat-header">
-        <div style="width: 40px;"></div>
-        <span class="fw-bold" style="font-size: 16px;">Chats</span>
-        <div style="width: 40px;"></div>
-      </header>
+      <main class="feature-page">
+        <section class="page-header-card">
+          <div class="page-header-main">
+            <span class="page-header-icon"><i class="bi bi-chat-dots-fill"></i></span>
+            <div>
+              <span class="page-header-eyebrow">Messages</span>
+              <h1 class="page-header-title">Chats</h1>
+              <p class="page-header-subtitle">Continue conversations with buyers and sellers.</p>
+            </div>
+          </div>
+          <div class="page-header-actions">
+            <a href="index.php" class="btn btn-portalia-secondary" style="height: 44px; padding: 0 18px !important; font-size: 13px;">
+              <i class="bi bi-shop me-2"></i>Browse
+            </a>
+          </div>
+        </section>
 
-      <main class="pb-5">
         <?php if (count($threads) == 0): ?>
-          <div class="empty-threads">
-            <div class="empty-threads-icon">
+          <section class="empty-state">
+            <div class="empty-state-icon">
               <i class="bi bi-chat-heart"></i>
             </div>
-            <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">Your Inbox is Empty</h2>
-            <p class="text-muted" style="font-size: 13px; max-width: 280px; margin: 0 auto 24px;">
-              Start a conversation by tapping 'Chat' on a product detail page.
-            </p>
+            <h2>No chats yet</h2>
+            <p>Start a conversation from a product detail page.</p>
             <a href="index.php" class="btn btn-portalia-primary">Browse Marketplace</a>
-          </div>
+          </section>
         <?php else: ?>
-          <div>
-            <?php foreach ($threads as $th): ?>
-              <a href="chat.php?receiver_id=<?php echo $th['contact_id']; ?>" class="chat-thread-item">
-                <div class="thread-user-info">
-                  <div class="thread-avatar">
-                    <img src="../<?php echo sanitize($th['contact_avatar']); ?>" alt="Avatar" class="w-100 h-100 rounded-circle" onerror="this.src='../assets/images/avatar/avatar.jpg'">
-                    <span class="online-indicator"></span>
-                  </div>
-                  <div class="thread-details">
-                    <div class="thread-header">
-                      <h3 class="thread-name"><?php echo sanitize($th['contact_name']); ?></h3>
-                      <span class="thread-time"><?php echo date('H:i', strtotime($th['last_time'])); ?></span>
+          <section class="chat-inbox-layout">
+            <div class="page-card chat-thread-list">
+              <div class="chat-thread-list-header">
+                <h2>Inbox</h2>
+                <p><?php echo count($threads); ?> active conversations</p>
+              </div>
+              <div class="chat-thread-items">
+                <?php foreach ($threads as $th): ?>
+                  <a href="chat.php?receiver_id=<?php echo $th['contact_id']; ?>" class="chat-thread-item">
+                    <div class="thread-user-info">
+                      <div class="thread-avatar">
+                        <img src="../<?php echo sanitize($th['contact_avatar']); ?>" alt="Avatar" class="w-100 h-100 rounded-circle" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+                        <span class="online-indicator"></span>
+                      </div>
+                      <div class="thread-details">
+                        <div class="thread-header">
+                          <h3 class="thread-name"><?php echo sanitize($th['contact_name']); ?></h3>
+                          <span class="thread-time"><?php echo date('H:i', strtotime($th['last_time'])); ?></span>
+                        </div>
+                        <p class="thread-preview">
+                          <?php if ($th['last_sender'] == $current_user_id): ?><span class="text-dark fw-semibold">You: </span><?php endif; ?>
+                          <?php echo sanitize($th['last_msg']); ?>
+                        </p>
+                      </div>
                     </div>
-                    <p class="thread-preview">
-                      <?php if ($th['last_sender'] == $current_user_id): ?><span class="text-dark fw-semibold">You: </span><?php endif; ?>
-                      <?php echo sanitize($th['last_msg']); ?>
-                    </p>
-                  </div>
+
+                    <?php if ($th['unread_count'] > 0): ?>
+                      <span class="badge rounded-pill bg-danger" style="font-size: 10px; padding: 4px 8px; margin-left: 8px;">
+                        <?php echo $th['unread_count']; ?>
+                      </span>
+                    <?php endif; ?>
+                  </a>
+                <?php endforeach; ?>
+              </div>
+            </div>
+
+            <aside class="page-card chat-preview-panel">
+              <div>
+                <div class="empty-state-icon">
+                  <i class="bi bi-chat-square-text"></i>
                 </div>
-                
-                <?php if ($th['unread_count'] > 0): ?>
-                  <span class="badge rounded-pill bg-danger" style="font-size: 10px; padding: 4px 8px; margin-left: 8px;">
-                    <?php echo $th['unread_count']; ?>
-                  </span>
-                <?php endif; ?>
-              </a>
-            <?php endforeach; ?>
-          </div>
+                <h2>Select a conversation</h2>
+                <p>Open a thread to coordinate meeting points, item details, and delivery plans.</p>
+              </div>
+            </aside>
+          </section>
         <?php endif; ?>
-      </main>
 
       <!-- FLOATING BOTTOM NAVIGATION -->
       <nav class="bottom-nav">
@@ -412,6 +444,7 @@ if ($receiver_id > 0) {
           <span>Profile</span>
         </a>
       </nav>
+      </main>
     <?php endif; ?>
 
   </div>
