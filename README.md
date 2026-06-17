@@ -96,7 +96,7 @@ Portalia includes an automatic setup script that initializes the database, confi
 1. Turn on **Apache** and **MySQL** in your local server control panel (XAMPP / Laragon).
 2. Open your web browser and navigate to:
    ```text
-   http://localhost/portalia/setup.php
+   http://localhost/portalia/setup.php 
    ```
 3. Click the **"Initialize Database"** button. The script will output confirmation logs and automatically redirect you to the welcome screen.
 
