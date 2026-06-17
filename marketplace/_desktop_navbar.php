@@ -53,6 +53,11 @@ if (!$_nav_is_guest) {
     </nav>
 
     <div class="desktop-nav-action">
+      <!-- Theme Toggle Button for Desktop -->
+      <button class="marketplace-theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme" style="margin-right: 8px;">
+        <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+      </button>
+
       <?php if ($_nav_is_guest): ?>
         <a href="login.php" class="btn btn-portalia-primary" style="height: 40px; padding: 0 24px !important; font-size: 13px;">
           <i class="bi bi-box-arrow-in-right me-2"></i>Log In
@@ -72,3 +77,8 @@ if (!$_nav_is_guest) {
     </div>
   </div>
 </header>
+
+<!-- Floating Theme Toggle for Mobile -->
+<button class="marketplace-theme-toggle mobile-theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
+  <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+</button>
