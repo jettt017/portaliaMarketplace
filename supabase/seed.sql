@@ -54,3 +54,14 @@ INSERT INTO transactions (buyer_id, seller_id, product_id, price, admin_fee, net
 (3, 4, 3, 150000.00, 7500.00, 142500.00, '2026-05-15 14:32:00'),
 (4, 2, 1, 85000.00, 4250.00, 80750.00, '2026-05-20 09:15:00'),
 (2, 3, 5, 50000.00, 2500.00, 47500.00, '2026-06-01 11:20:00');
+
+-- Product Reviews
+INSERT INTO product_reviews (product_id, user_id, rating, comment, created_at) VALUES
+(1, 3, 5, 'Bukunya sangat mulus! Tidak ada coretan yang mengganggu, halaman lengkap. Penjual juga sangat ramah saat COD di perpus.', '2026-06-12 10:00:00'),
+(1, 4, 4, 'Kondisi buku sesuai deskripsi. Cukup membantu untuk kuliah kalkulus semester ini.', '2026-06-10 14:30:00'),
+(2, 2, 5, 'Gila keren banget iPad-nya! Mulus banget seperti baru, dapet stylus juga. Terbantu sekali buat tugas desain grafis.', '2026-06-14 09:15:00'),
+(3, 3, 5, 'Jaketnya masih wangi dan bersih. Ukurannya pas banget sesuai deskripsi penjual. Makasih kak!', '2026-06-11 16:45:00'),
+(4, 4, 5, 'Kopinya enak banget, segar dan gak terlalu asam. Cocok buat nemenin begadang ngerjain tugas.', '2026-06-16 20:00:00'),
+(4, 3, 4, 'Rasa kopinya mantap! Pengirimannya cepat dan masih dingin pas sampai.', '2026-06-15 11:10:00'),
+(5, 2, 5, 'Hasil terjemahannya sangat rapi dan grammar-nya akurat. Pengerjaan cepat, sangat recommended buat tugas akhir!', '2026-06-08 13:20:00');
+

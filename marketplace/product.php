@@ -25,6 +25,23 @@ if (!$product) {
     die("Product not found.");
 }
 
+// Fetch product reviews from database
+$stmt = $db->prepare("SELECT r.*, u.username, u.avatar 
+                      FROM product_reviews r 
+                      JOIN users u ON r.user_id = u.id 
+                      WHERE r.product_id = ? 
+                      ORDER BY r.created_at DESC");
+$stmt->execute([$productId]);
+$reviews = $stmt->fetchAll();
+
+// Calculate average rating
+$avg_rating = 0;
+$total_reviews = count($reviews);
+if ($total_reviews > 0) {
+    $total_rating = array_sum(array_column($reviews, 'rating'));
+    $avg_rating = $total_rating / $total_reviews;
+}
+
 $error = '';
 $success = '';
 
@@ -74,10 +91,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'buy') {
 
 // Check if already in wishlist
 $in_wishlist = false;
+$user_profile = null;
 if (!$is_guest) {
     $stmt = $db->prepare("SELECT id FROM wishlist WHERE user_id = ? AND product_id = ?");
     $stmt->execute([$current_user_id, $productId]);
     $in_wishlist = (bool)$stmt->fetch();
+    
+    $user_profile = getCurrentUser();
 }
 
 $bought = isset($_GET['bought']) && $_GET['bought'] == 1;
@@ -172,6 +192,85 @@ $bought = isset($_GET['bought']) && $_GET['bought'] == 1;
       box-shadow: var(--portalia-shadow-elevated);
       text-align: center;
       position: relative;
+    }
+    
+    /* Ratings & Reviews Styles */
+    .rating-summary {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--portalia-bg);
+      padding: 16px;
+      border-radius: var(--portalia-radius-md);
+      margin-bottom: 20px;
+    }
+    .rating-big-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--portalia-primary);
+      line-height: 1;
+    }
+    .rating-stars {
+      color: #FFB300;
+      font-size: 16px;
+    }
+    .rating-stars-input {
+      color: #CBD5E1;
+      font-size: 24px;
+      cursor: pointer;
+      display: inline-flex;
+      gap: 4px;
+    }
+    .rating-stars-input .bi-star-fill {
+      transition: var(--portalia-transition);
+    }
+    .rating-stars-input .bi-star-fill.active {
+      color: #FFB300;
+    }
+    .review-item {
+      border-bottom: 1px solid var(--portalia-border);
+      padding: 16px 0;
+    }
+    .review-item:last-child {
+      border-bottom: none;
+    }
+    .review-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .review-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .review-username {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--portalia-text-primary);
+    }
+    .review-date {
+      font-size: 11px;
+      color: var(--portalia-text-secondary);
+    }
+    .review-comment {
+      font-size: 13px;
+      color: var(--portalia-text-secondary);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    .write-review-card {
+      background: var(--portalia-bg);
+      border-radius: var(--portalia-radius-md);
+      padding: 16px;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -298,6 +397,101 @@ $bought = isset($_GET['bought']) && $_GET['bought'] == 1;
           </div>
         </div>
 
+        <!-- RATINGS & REVIEWS CARD -->
+        <div class="card-portalia mt-4 mb-4">
+          <h2 style="font-size: 15px; font-weight: 700; margin-bottom: 16px;">
+            <i class="bi bi-star-fill me-2" style="color: #FFB300;"></i>Ratings & Reviews
+          </h2>
+          
+          <!-- Rating Summary -->
+          <div class="rating-summary">
+            <div class="rating-big-number"><?php echo number_format($avg_rating, 1); ?></div>
+            <div>
+              <div class="rating-stars mb-1">
+                <?php
+                $fullStars = floor($avg_rating);
+                $hasHalf = ($avg_rating - $fullStars) >= 0.5;
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i <= $fullStars) {
+                        echo '<i class="bi bi-star-fill me-1" style="color: #FFB300;"></i>';
+                    } elseif ($i == $fullStars + 1 && $hasHalf) {
+                        echo '<i class="bi bi-star-half me-1" style="color: #FFB300;"></i>';
+                    } else {
+                        echo '<i class="bi bi-star me-1" style="color: #CBD5E1;"></i>';
+                    }
+                }
+                ?>
+              </div>
+              <span class="text-muted" style="font-size: 12px;">Based on <?php echo $total_reviews; ?> review<?php echo $total_reviews != 1 ? 's' : ''; ?></span>
+            </div>
+          </div>
+
+          <!-- Reviews List -->
+          <div id="reviews-list">
+            <?php if ($total_reviews === 0): ?>
+              <p class="text-muted text-center my-4" style="font-size: 12px;">Be the first to review this product!</p>
+            <?php else: ?>
+              <?php foreach ($reviews as $r): ?>
+                <div class="review-item">
+                  <div class="review-header">
+                    <div class="review-user">
+                      <img src="../<?php echo sanitize($r['avatar']); ?>" alt="<?php echo sanitize($r['username']); ?>" class="review-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
+                      <div>
+                        <span class="review-username d-block"><?php echo sanitize($r['username']); ?></span>
+                        <div style="font-size: 11px;">
+                          <?php
+                          for ($i = 1; $i <= 5; $i++) {
+                              if ($i <= $r['rating']) {
+                                  echo '<i class="bi bi-star-fill me-1" style="color: #FFB300;"></i>';
+                              } else {
+                                  echo '<i class="bi bi-star me-1" style="color: #CBD5E1;"></i>';
+                              }
+                          }
+                          ?>
+                        </div>
+                      </div>
+                    </div>
+                    <span class="review-date"><?php echo date('d M Y', strtotime($r['created_at'])); ?></span>
+                  </div>
+                  <p class="review-comment text-secondary"><?php echo sanitize($r['comment']); ?></p>
+                </div>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </div>
+
+          <!-- Write Review Form -->
+          <?php if ($is_guest): ?>
+            <div class="text-center p-3 mt-3 bg-light rounded" style="font-size: 12px;">
+              <span class="text-muted">Please <a href="login.php" class="fw-semibold text-primary">log in</a> to write a product review.</span>
+            </div>
+          <?php else: ?>
+            <div class="write-review-card mt-3">
+              <h3 style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Write a Review</h3>
+              
+              <!-- Stars Rating Input -->
+              <div class="mb-3">
+                <span class="text-muted d-block mb-1" style="font-size: 11px;">Your Rating:</span>
+                <div class="rating-stars-input" id="stars-input-container">
+                  <i class="bi bi-star-fill active" data-rating="1"></i>
+                  <i class="bi bi-star-fill active" data-rating="2"></i>
+                  <i class="bi bi-star-fill active" data-rating="3"></i>
+                  <i class="bi bi-star-fill active" data-rating="4"></i>
+                  <i class="bi bi-star-fill active" data-rating="5"></i>
+                </div>
+              </div>
+
+              <!-- Comment Input -->
+              <div>
+                <textarea id="new-review-text" class="input-portalia" rows="3" placeholder="Share your experience with this product..." style="font-size: 12px; height: 80px; padding: 10px;"></textarea>
+              </div>
+
+              <button type="button" id="submit-review-btn" class="btn btn-portalia-primary w-100 mt-3" style="height: 40px; font-size: 13px; padding: 0 16px !important;">
+                Submit Review
+              </button>
+            </div>
+          <?php endif; ?>
+        </div>
+
         <!-- STICKY CTA BAR -->
         <div class="sticky-cta-bar">
           <button type="button" class="action-icon-btn product-detail-wishlist-btn <?php echo $in_wishlist ? 'active' : ''; ?>"
@@ -370,6 +564,63 @@ $bought = isset($_GET['bought']) && $_GET['bought'] == 1;
         alert('Network error.');
       });
     });
+
+    // Handle submitting review via AJAX
+    (function() {
+      const productId = <?php echo $productId; ?>;
+      const isGuest = <?php echo $is_guest ? 'true' : 'false'; ?>;
+
+      if (!isGuest) {
+        let currentInputRating = 5;
+        const stars = document.querySelectorAll('#stars-input-container .bi-star-fill');
+        
+        stars.forEach(star => {
+          star.addEventListener('click', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            currentInputRating = rating;
+            
+            stars.forEach((s, idx) => {
+              if (idx < rating) {
+                s.classList.add('active');
+              } else {
+                s.classList.remove('active');
+              }
+            });
+          });
+        });
+
+        const submitBtn = document.getElementById('submit-review-btn');
+        const commentInput = document.getElementById('new-review-text');
+
+        submitBtn.addEventListener('click', function() {
+          const comment = commentInput.value.trim();
+          if (!comment) {
+            alert('Please enter some text for your review!');
+            return;
+          }
+
+          fetch('review_add.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `product_id=${productId}&rating=${currentInputRating}&comment=${encodeURIComponent(comment)}`
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 'success') {
+              window.location.reload();
+            } else {
+              alert(data.message || 'Failed to submit review.');
+            }
+          })
+          .catch(err => {
+            console.error(err);
+            alert('Network error. Failed to submit review.');
+          });
+        });
+      }
+    })();
   </script>
 </body>
 </html>
