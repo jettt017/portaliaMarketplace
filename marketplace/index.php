@@ -28,7 +28,9 @@ $categories = $stmt->fetchAll();
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category_id = isset($_GET['category']) ? intval($_GET['category']) : 0;
 
-$sql = "SELECT p.*, u.username as seller_name, u.avatar as seller_avatar, c.name as category_name 
+$sql = "SELECT p.*, u.username as seller_name, u.avatar as seller_avatar, c.name as category_name,
+               COALESCE((SELECT AVG(rating) FROM product_reviews WHERE product_id = p.id), 0) as avg_rating,
+               (SELECT COUNT(*) FROM product_reviews WHERE product_id = p.id) as review_count
         FROM products p 
         JOIN users u ON p.seller_id = u.id 
         JOIN categories c ON p.category_id = c.id 
@@ -293,6 +295,15 @@ if (!$is_guest) {
                   <h3 class="product-card-title"><?php echo sanitize($prod['name']); ?></h3>
                   <span class="product-card-price"><?php echo formatRupiah($prod['price']); ?></span>
 
+                  <!-- Product Ratings badge -->
+                  <?php if ($prod['review_count'] > 0): ?>
+                    <div class="product-card-rating mt-2" style="font-size: 11px; display: inline-flex; align-items: center; gap: 4px;">
+                      <i class="bi bi-star-fill" style="color: #FFB300;"></i>
+                      <span class="fw-semibold text-dark"><?php echo number_format($prod['avg_rating'], 1); ?></span>
+                      <span class="text-muted">(<?php echo $prod['review_count']; ?>)</span>
+                    </div>
+                  <?php endif; ?>
+
                   <div class="product-card-footer">
                     <img src="../<?php echo sanitize($prod['seller_avatar']); ?>" alt="Seller" class="product-card-avatar" onerror="this.src='../assets/images/avatar/avatar.jpg'">
                     <span class="product-card-seller"><?php echo sanitize($prod['seller_name']); ?></span>
@@ -374,7 +385,6 @@ if (!$is_guest) {
           alert('Network error. Failed to update wishlist.');
         });
       });
-    });
   </script>
 </body>
 </html>
