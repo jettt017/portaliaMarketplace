@@ -25,6 +25,12 @@
   --portalia-page-pad: 16px;
   --portalia-grid-gap: 14px;
   --portalia-card-media-height: 150px;
+  
+  /* Transparent surface variables for headers/bars with backdrop-filter */
+  --portalia-surface-trans-92: rgba(255, 255, 255, 0.92);
+  --portalia-surface-trans-94: rgba(255, 255, 255, 0.94);
+  --portalia-surface-trans-95: rgba(255, 255, 255, 0.95);
+  --portalia-surface-trans-85: rgba(255, 255, 255, 0.85);
 }
 
 body {
@@ -83,8 +89,8 @@ h1, h2, h3, h4, h5, h6 {
 .page-card,
 .form-card,
 .page-header-card {
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(226, 232, 240, 0.82);
+  background: var(--portalia-surface-trans-94);
+  border: 1px solid var(--portalia-border);
   border-radius: 22px;
   box-shadow: var(--portalia-shadow-card);
 }
@@ -201,8 +207,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .empty-state {
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(226, 232, 240, 0.82);
+  background: var(--portalia-surface-trans-94);
+  border: 1px solid var(--portalia-border);
   border-radius: 22px;
   box-shadow: var(--portalia-shadow-card);
   padding: 34px 20px;
@@ -323,10 +329,10 @@ h1, h2, h3, h4, h5, h6 {
   width: calc(100% - 32px);
   max-width: 520px;
   height: 68px;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--portalia-surface-trans-85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--portalia-border);
   border-radius: var(--portalia-radius-lg);
   box-shadow: var(--portalia-shadow-elevated);
   display: flex;
@@ -498,9 +504,9 @@ textarea.input-portalia {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--portalia-surface-trans-92);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
+  border: 1px solid var(--portalia-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -725,9 +731,9 @@ textarea.input-portalia {
   transform: translateX(-50%);
   width: 100%;
   max-width: min(100% - 32px, 960px) !important;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--portalia-surface-trans-95);
   backdrop-filter: blur(10px);
-  border-top: 1px solid #E5E7EB;
+  border-top: 1px solid var(--portalia-border);
   padding: 12px 16px;
   display: flex;
 }
@@ -740,9 +746,9 @@ textarea.input-portalia {
   transform: translateX(-50%);
   width: 100%;
   max-width: min(100% - 32px, var(--portalia-page-max));
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--portalia-surface-trans-95);
   backdrop-filter: blur(10px);
-  border-top: 1px solid #E5E7EB;
+  border-top: 1px solid var(--portalia-border);
   padding: 12px 16px;
   display: flex;
   align-items: center;
@@ -1428,10 +1434,10 @@ textarea.input-portalia {
     width: 100%;
     min-height: 72px;
     margin: 16px 0 24px;
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border: 1px solid var(--portalia-border);
     border-radius: 24px;
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+    background: var(--portalia-surface-trans-92);
+    box-shadow: var(--portalia-shadow-elevated);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     overflow: hidden;
@@ -1505,7 +1511,7 @@ textarea.input-portalia {
     text-decoration: none;
     padding: 6px 12px;
     border-radius: var(--portalia-radius-pill);
-    border: 1px solid rgba(226, 232, 240, 0.85);
+    border: 1px solid var(--portalia-border);
     background: var(--portalia-surface);
     transition: var(--portalia-transition);
   }
@@ -1621,9 +1627,9 @@ textarea.input-portalia {
 
   .search-box {
     min-height: 58px;
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border: 1px solid var(--portalia-border);
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--portalia-surface-trans-94);
     box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
   }
 
@@ -1821,3 +1827,149 @@ textarea.input-portalia {
   --admin-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.15) !important;
   --admin-ring: 0 0 0 4px rgba(79, 140, 255, 0.15) !important;
 }
+
+/* --- Dark Theme Variables and Specificity Overrides --- */
+html[data-theme="dark"] {
+  --portalia-bg: #0f172a;
+  --portalia-surface: #182235;
+  --portalia-muted-surface: #111827;
+  --portalia-text-primary: #e5edf7;
+  --portalia-text-secondary: #9aa8bd;
+  --portalia-border: #2f3b52;
+  --portalia-shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.24);
+  --portalia-shadow-elevated: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --portalia-shadow-card: 0 8px 22px rgba(0, 0, 0, 0.2);
+  --portalia-surface-trans-92: rgba(24, 34, 53, 0.92);
+  --portalia-surface-trans-94: rgba(24, 34, 53, 0.94);
+  --portalia-surface-trans-95: rgba(24, 34, 53, 0.95);
+  --portalia-surface-trans-85: rgba(24, 34, 53, 0.85);
+
+  /* Admin panel variables in dark mode */
+  --admin-primary: #60a5fa !important;
+  --admin-primary-dark: #3b82f6 !important;
+  --admin-success: #2dd4bf !important;
+  --admin-danger: #f87171 !important;
+  --admin-shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.24) !important;
+  --admin-shadow: 0 18px 46px rgba(0, 0, 0, 0.32) !important;
+  --admin-shadow-lg: 0 26px 70px rgba(0, 0, 0, 0.42) !important;
+  --admin-ring: 0 0 0 4px rgba(96, 165, 250, 0.18) !important;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at top left, rgba(79, 140, 255, 0.12), transparent 32rem),
+    linear-gradient(180deg, #111827 0%, var(--portalia-bg) 100%) !important;
+  color: var(--portalia-text-primary) !important;
+}
+
+/* Custom theme toggles styling */
+.marketplace-theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--portalia-surface);
+  border: 1px solid var(--portalia-border);
+  color: var(--portalia-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--portalia-transition);
+  box-shadow: var(--portalia-shadow-soft);
+}
+
+.marketplace-theme-toggle:hover {
+  background: var(--portalia-muted-surface);
+  transform: scale(1.05);
+}
+
+.mobile-theme-toggle {
+  position: fixed;
+  bottom: 100px;
+  right: 16px;
+  z-index: 1050;
+  box-shadow: var(--portalia-shadow-elevated);
+}
+
+@media (min-width: 992px) {
+  .mobile-theme-toggle {
+    display: none !important;
+  }
+}
+
+.auth-theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1010;
+}
+
+/* Dark mode bootstrap/inline-style high specificity overrides */
+html[data-theme="dark"] .profile-hero-section {
+  background: linear-gradient(135deg, var(--portalia-muted-surface) 0%, var(--portalia-bg) 100%) !important;
+  border-bottom-color: var(--portalia-border) !important;
+}
+
+html[data-theme="dark"] .profile-avatar-lg {
+  border-color: var(--portalia-surface) !important;
+}
+
+html[data-theme="dark"] .stats-row {
+  background: var(--portalia-surface) !important;
+}
+
+html[data-theme="dark"] .stat-item:not(:last-child) {
+  border-right-color: var(--portalia-border) !important;
+}
+
+html[data-theme="dark"] .profile-tabs {
+  background: var(--portalia-surface) !important;
+  border-bottom-color: var(--portalia-border) !important;
+}
+
+html[data-theme="dark"] .product-card-wishlist {
+  background: rgba(24, 34, 53, 0.92) !important;
+}
+
+html[data-theme="dark"] .product-card-wishlist:hover {
+  background: var(--portalia-surface) !important;
+}
+
+html[data-theme="dark"] .alert-portalia {
+  background-color: var(--portalia-muted-surface) !important;
+  color: var(--portalia-text-primary) !important;
+}
+
+html[data-theme="dark"] hr {
+  border-top-color: var(--portalia-border) !important;
+  opacity: 0.3;
+}
+
+html[data-theme="dark"] .modal-content {
+  background-color: var(--portalia-surface) !important;
+  color: var(--portalia-text-primary) !important;
+}
+
+html[data-theme="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(180%);
+}
+
+html[data-theme="dark"] .dropdown-menu {
+  background-color: var(--portalia-surface) !important;
+  border-color: var(--portalia-border) !important;
+}
+
+html[data-theme="dark"] .dropdown-item {
+  color: var(--portalia-text-primary) !important;
+}
+
+html[data-theme="dark"] .dropdown-item:hover,
+html[data-theme="dark"] .dropdown-item:focus {
+  background-color: var(--portalia-muted-surface) !important;
+}
+
+/* Fix product ratings badge text in dark mode */
+html[data-theme="dark"] .product-card-rating span.text-dark {
+  color: var(--portalia-text-primary) !important;
+}
+
