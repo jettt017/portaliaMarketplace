@@ -89,6 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
   <div class="auth-page-wrapper">
+    <!-- Theme Toggle Button -->
+    <button class="marketplace-theme-toggle auth-theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
+      <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+    </button>
+
     <div class="auth-card-portalia">
       <div class="text-center mb-4">
         <a href="welcome.php" class="text-decoration-none d-inline-flex align-items-center gap-2">
@@ -130,5 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 
+  <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>

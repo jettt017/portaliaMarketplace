@@ -106,6 +106,11 @@ if (isAuthenticated() && $_SESSION['user_id'] !== 'guest') {
 <body>
 
   <div class="welcome-screen">
+    <!-- Theme Toggle Button -->
+    <button class="marketplace-theme-toggle auth-theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" title="Switch color theme">
+      <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+    </button>
+
     <div class="welcome-illustration">
       <div class="ill-circle-1"></div>
       <div class="ill-circle-2"></div>
@@ -124,5 +129,7 @@ if (isAuthenticated() && $_SESSION['user_id'] !== 'guest') {
     </div>
   </div>
 
+  <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>

@@ -450,5 +450,6 @@ if ($receiver_id > 0) {
   </div>
 
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>

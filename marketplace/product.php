@@ -524,6 +524,7 @@ $bought = isset($_GET['bought']) && $_GET['bought'] == 1;
   </div>
 
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
   <script>
     // Handle wishlist toggle via AJAX
     document.querySelector('.product-detail-wishlist-btn').addEventListener('click', function(e) {

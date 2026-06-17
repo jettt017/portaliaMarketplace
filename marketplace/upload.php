@@ -318,6 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
   <script>
     // Handle step validations & screen toggles
     function nextStep(currentStep) {
