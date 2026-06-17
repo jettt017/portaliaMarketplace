@@ -343,6 +343,7 @@ if (!$is_guest) {
   </div>
 
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/main.js"></script>
   <script>
     // Handle Wishlist Toggling dynamically via Fetch API
     document.querySelectorAll('.product-card-wishlist').forEach(button => {
@@ -385,6 +386,7 @@ if (!$is_guest) {
           alert('Network error. Failed to update wishlist.');
         });
       });
+    });
   </script>
 </body>
 </html>
