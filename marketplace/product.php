@@ -73,11 +73,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'buy') {
             $newStock = $product['stock'] - 1;
             if ($newStock <= 0) {
                 $stmt = $db->prepare("UPDATE products SET stock = 0, status = 'expired' WHERE id = ?");
+                $stmt->execute([$productId]);
             } else {
                 $stmt = $db->prepare("UPDATE products SET stock = ? WHERE id = ?");
                 $stmt->execute([$newStock, $productId]);
             }
-            $stmt->execute([$productId]);
 
             $db->commit();
             header("Location: product.php?id=" . $productId . "&bought=1");
