@@ -25,7 +25,7 @@ if (isset($_GET['auto_msg']) && $_GET['auto_msg'] == 1 && $receiver_id > 0 && $p
     $stmt->execute([$current_user_id, $receiver_id, $product_id]);
     if (!$stmt->fetch()) {
         // Send initial message
-        $stmt = $db->prepare("INSERT INTO chat_messages (sender_id, receiver_id, product_id, message, is_read) VALUES (?, ?, ?, 'I just purchased your product! Let\'s coordinate delivery details.', 0)");
+        $stmt = $db->prepare("INSERT INTO chat_messages (sender_id, receiver_id, product_id, message, is_read) VALUES (?, ?, ?, 'I just purchased your product! Let''s coordinate delivery details.', 0)");
         $stmt->execute([$current_user_id, $receiver_id, $product_id]);
         
         // Auto reply simulation: Insert a seller reply
